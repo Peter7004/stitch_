@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>전기기능사 | 2021년 2회 채점 결과</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Pretendard:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: '#0f3d66',
+          secondary: '#0d8a72',
+          cream: '#f8f6ef',
+          ink: '#18222c',
+          line: '#d8dee6',
+          muted: '#6a7683',
+          card: '#ffffff',
+          accent: '#e7f6f2',
+          active: '#d9e8ff',
+          warn: '#fff1cc',
+          fail: '#f3f4f6',
+          danger: '#d64545'
+        },
+        fontFamily: {
+          headline: ['Manrope', 'sans-serif'],
+          body: ['Pretendard', 'sans-serif']
+        },
+        boxShadow: {
+          soft: '0 18px 50px rgba(15, 61, 102, 0.08)'
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background: radial-gradient(circle at top left, #eef6ff, #f8f6ef 40%, #f3f7f5 100%); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+</style>
+</head>
+<body class="font-body text-ink min-h-screen">
+<div class="max-w-7xl mx-auto px-6 py-8 md:px-10 md:py-10">
+  <header class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div>
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-secondary">Axiom Blue</p>
+      <h1 class="mt-3 text-4xl font-headline font-extrabold text-primary">2021년도 2회 전기기능사 결과</h1>
+      <p class="mt-2 text-sm text-muted">제출된 답안을 기준으로 총점과 오답 해설을 정리했습니다.</p>
+    </div>
+    <div class="flex gap-3">
+      <a class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-primary shadow-soft transition hover:bg-cream" href="../quiz/code.html">
+        <span class="material-symbols-outlined text-sm">library_books</span>
+        기출문제 메인
+      </a>
+      <a class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-primary shadow-soft transition hover:bg-cream" href="../quizui/2021b.html">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        다시 시험 보기
+      </a>
+    </div>
+  </header>
+
+  <div class="mt-8 grid gap-8 lg:grid-cols-[380px_minmax(0,1fr)]">
+    <section class="space-y-6">
+      <div class="rounded-[32px] border border-line bg-white p-8 shadow-soft">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.25em] text-muted">최종 결과</p>
+            <h2 id="resultLabel" class="mt-3 text-3xl font-headline font-extrabold text-primary">채점 결과</h2>
+          </div>
+          <div id="resultIconWrap" class="flex h-20 w-20 items-center justify-center rounded-full border-2 border-line bg-fail text-slate-300">
+            <span id="resultIcon" class="material-symbols-outlined text-5xl">check_circle</span>
+          </div>
+        </div>
+        <div class="mt-8 flex items-end gap-3">
+          <span id="scoreValue" class="text-6xl font-headline font-extrabold text-slate-400">--</span>
+          <span class="pb-2 text-2xl font-bold text-slate-400">/ 100</span>
+        </div>
+        <div id="statusBadge" class="mt-4 inline-flex rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-500">제출 데이터 없음</div>
+        <p id="statusDescription" class="mt-4 text-sm leading-7 text-muted">시험을 제출하면 이곳에 합격 여부와 상세 결과가 표시됩니다.</p>
+
+        <div class="mt-8 grid grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-cream p-4">
+            <p class="text-xs font-semibold text-muted">맞은 문제</p>
+            <p id="correctCount" class="mt-2 text-2xl font-headline font-bold text-primary">0</p>
+          </div>
+          <div class="rounded-2xl bg-cream p-4">
+            <p class="text-xs font-semibold text-muted">틀린 문제</p>
+            <p id="wrongCount" class="mt-2 text-2xl font-headline font-bold text-danger">0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-[32px] border border-line bg-white p-8 shadow-soft">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-headline font-extrabold text-primary">과목별 정답률</h3>
+          <span class="rounded-full bg-accent px-3 py-1 text-xs font-bold text-secondary">3과목</span>
+        </div>
+        <div id="subjectBreakdown" class="mt-6 space-y-6"></div>
+      </div>
+
+      <div class="rounded-[32px] border border-line bg-white p-8 shadow-soft">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl font-headline font-extrabold text-primary">문항 맵</h3>
+          <span id="mapSummary" class="text-sm font-semibold text-muted">응답 없음</span>
+        </div>
+        <div id="questionMap" class="mt-6 grid grid-cols-5 gap-2"></div>
+      </div>
+    </section>
+
+    <section class="rounded-[32px] border border-line bg-white p-8 shadow-soft">
+      <div class="flex items-center justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.25em] text-muted">해설</p>
+          <h3 class="mt-2 text-3xl font-headline font-extrabold text-primary">틀린 문제 다시 보기</h3>
+        </div>
+        <span id="explanationCount" class="rounded-full bg-warn px-4 py-2 text-sm font-bold text-amber-800">0문항</span>
+      </div>
+      <div id="emptyState" class="mt-8 rounded-3xl border border-dashed border-line bg-cream p-8 text-sm leading-7 text-muted">
+        제출된 답안이 없거나 모든 문제를 맞히면 이 영역에 안내 메시지가 표시됩니다.
+      </div>
+      <div id="wrongList" class="mt-8 space-y-6"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const rawQuestions = [
+  { n: 1, s: '제1과목 전기이론', t: '자계의 영향을 받지 않아 자화가 되지 않는 물질로, 강자성체 이외의 자성이 약한 물질이나 전혀 자성을 갖지 않는 물질을 무엇이라고 하는가?', o: ['상자성체', '반자성체', '비자성체', '페리자성체'] },
+  { n: 2, s: '제1과목 전기이론', t: '도체에 대전체를 접근시키면 가까운 쪽에는 다른 전하, 반대쪽에는 같은 종류의 전하가 나타나는 현상을 무엇이라고 하는가?', o: ['정전차폐', '자기유도', '대전', '정전유도'] },
+  { n: 3, s: '제1과목 전기이론', t: '공기 중에 놓인 4×10^-8 C의 전하에서 4m 떨어진 점 P와 2m 떨어진 점 Q와의 전위차는 몇 V인가?', o: ['80', '90', '100', '110'] },
+  { n: 4, s: '제1과목 전기이론', t: '길이 31.4cm, 단면적 0.25㎡, 비투자율 100인 철심으로 자기회로를 구성하면 자기저항은 몇 AT/Wb인가? (진공 투자율은 4π×10^-7 H/m)', o: ['2648.24', '6784.58', '8741.49', '9994.93'] },
+  { n: 5, s: '제1과목 전기이론', t: '220V용 50W 전구와 30W 전구를 직렬로 연결하여 220V 전원에 연결하면 어떻게 되는가?', o: ['두 전구의 밝기가 같다', '30W의 전구가 더 밝다', '50W의 전구가 더 밝다', '두 전구 모두 안 켜진다'] },
+  { n: 6, s: '제1과목 전기이론', t: '자장 중에서 도선에 발생되는 유기 기전력의 방향은 어떤 법칙에 의하여 설명되는가?', o: ['패러데이의 법칙', '앙페르의 오른나사 법칙', '렌츠의 법칙', '가우스의 법칙'] },
+  { n: 7, s: '제1과목 전기이론', t: '공기 중에 1m 떨어져 평행으로 놓인 두 개의 무한히 긴 도선에 왕복 전류가 흐를 때, 단위 길이당 18×10^-7 N의 힘이 작용한다면 전류는 약 몇 A인가?', o: ['3', '9', '27', '34'] },
+  { n: 8, s: '제1과목 전기이론', t: '두 코일이 서로 직각으로 교차할 때 상호인덕턴스는?', o: ['L1 + L2', 'L1 - L2', 'L1 × L2', '0'] },
+  { n: 9, s: '제1과목 전기이론', t: '어느 코일에서 0.1초 동안 전류가 0.3A에서 0.2A로 변할 때 유도기전력이 2×10^-4 V이면, 자체인덕턴스는 몇 mH인가?', o: ['0.1', '0.2', '0.3', '0.4'] },
+  { n: 10, s: '제1과목 전기이론', t: '주파수 10Hz의 주기는 몇 초인가?', o: ['0.05', '0.02', '0.01', '0.1'] },
+  { n: 11, s: '제1과목 전기이론', t: 'R=8Ω, L=19.1mH의 직렬회로에 5A가 흐를 때 인덕턴스 L에 걸리는 단자전압은 약 몇 V인가? (주파수 60Hz)', o: ['12', '25', '29', '36'] },
+  { n: 12, s: '제1과목 전기이론', t: '저항 4Ω, 유도리액턴스 8Ω, 용량리액턴스 5Ω이 직렬인 회로의 역률은?', o: ['0.8', '0.7', '0.6', '0.5'] },
+  { n: 13, s: '제1과목 전기이론', t: '그림과 같은 RC 병렬회로에서 합성 임피던스 식은?', o: ['Z = √(R² + (1/ωC)²)', 'Z = 1 / √((1/R)² + (ωC)²)', 'Z = √((1/R)² + (ωC)²)', 'Z = 1 / √((1/R)² + (1/ωC)²)'] },
+  { n: 14, s: '제1과목 전기이론', t: 'L만의 회로에서 유도리액턴스는 주파수가 1kHz일 때 50Ω이었다. 주파수를 500Hz로 바꾸면 유도리액턴스는 몇 Ω인가?', o: ['12.5', '25', '50', '100'] },
+  { n: 15, s: '제1과목 전기이론', t: 'RLC 직렬공진회로에서 최대가 되는 것은?', o: ['전류', '임피던스', '리액턴스', '저항'] },
+  { n: 16, s: '제1과목 전기이론', t: '다음 중 유효전력의 단위는 어느 것인가?', o: ['W', 'Var', 'kVA', 'VA'] },
+  { n: 17, s: '제1과목 전기이론', t: '전압 200V, 저항 8Ω, 유도 리액턴스 6Ω이 직렬로 연결된 회로에 흐르는 전류와 역률은 얼마인가?', o: ['20A, 0.8', '20A, 0.7', '10A, 0.6', '10A, 0.5'] },
+  { n: 18, s: '제1과목 전기이론', t: '평형 3상 회로에서 1상의 소비전력이 P라면 3상 회로의 전체 소비전력은?', o: ['P', '2P', '3P', '√3P'] },
+  { n: 19, s: '제1과목 전기이론', t: '비정현파가 발생하는 원인과 거리가 먼 것은?', o: ['자기포화', '옴의 법칙', '히스테리시스', '전기자 반작용'] },
+  { n: 20, s: '제1과목 전기이론', t: '세 변의 저항 Ra = Rb = Rc = 15Ω인 Y결선 회로와 등가인 Δ결선 회로의 각 변 저항은 몇 Ω인가?', o: ['5', '10', '25', '45'] },
+  { n: 21, s: '제2과목 전기기기', t: '영구자석 또는 전자석 끝부분에 설치한 자성 재료편으로서, 전기자에 대응하여 계자 자속을 공극 부분에 적당히 분포시키는 역할을 하는 것은?', o: ['자극편', '정류자', '공극', '브러시'] },
+  { n: 22, s: '제2과목 전기기기', t: '발전기의 전압변동률을 표시하는 식은? (V0 : 무부하전압, Vn : 정격전압)', o: ['ε = ((V0/Vn) - 1) × 100%', 'ε = (1 - (Vn/V0)) × 100%', 'ε = ((Vn/V0) - 1) × 100%', 'ε = (1 - (V0/Vn)) × 100%'] },
+  { n: 23, s: '제2과목 전기기기', t: '13200/220 변압기에서 1차전압 6000V를 가했을 때 2차전압은 몇 V인가?', o: ['1000', '10', '100', '1'] },
+  { n: 24, s: '제2과목 전기기기', t: '변압기의 규약효율은?', o: ['입력/출력 × 100%', '출력/(출력 + 손실) × 100%', '출력/(입력 - 손실) × 100%', '입력/(입력 + 손실) × 100%'] },
+  { n: 25, s: '제2과목 전기기기', t: '일반적으로 사용하는 주상변압기의 냉각방식은?', o: ['유입 송유식', '유입 수냉식', '유입 풍냉식', '유입 자냉식'] },
+  { n: 26, s: '제2과목 전기기기', t: '여러 변압기를 1개의 조로 묶어 전력을 변성하는 단위를 말하는 용어는 무엇인가?', o: ['뱅크', '슬립', '동기속도', '역률'] },
+  { n: 27, s: '제2과목 전기기기', t: '변압기의 결선방식에서 낮은 전압을 높은 전압으로 올릴 때 사용하는 결선방식은?', o: ['Y-Y 결선방식', 'Δ-Δ 결선방식', 'Δ-Y 결선방식', 'Y-Δ 결선방식'] },
+  { n: 28, s: '제2과목 전기기기', t: '고장 시의 불평형 차전류가 평형 전류의 어떤 비율 이상이 되었을 때 동작하는 계전기는?', o: ['과전압 계전기', '과전류 계전기', '전압 차동 계전기', '비율 차동 계전기'] },
+  { n: 29, s: '제2과목 전기기기', t: '동기 속도 3600rpm, 주파수 60Hz의 유도전동기의 극수는?', o: ['2', '4', '6', '8'] },
+  { n: 30, s: '제2과목 전기기기', t: '다음은 3상 유도전동기 고정자 권선의 결선도를 나타낸 것이다. 맞는 사항을 고르시오.', o: ['3상 2극, Y결선', '3상 4극, Y결선', '3상 2극, Δ결선', '3상 4극, Δ결선'] },
+  { n: 31, s: '제2과목 전기기기', t: '정지 상태에 있는 3상 유도전동기의 슬립 값은?', o: ['0', '1', '2', '3'] },
+  { n: 32, s: '제2과목 전기기기', t: '단상유도전동기 중 돌출극에 구리 단락고리를 끼워 회전자계를 만들어 기동하는 것은?', o: ['콘덴서 기동형', '영구콘덴서형', '셰이딩 코일형', '반발기동형'] },
+  { n: 33, s: '제2과목 전기기기', t: '정격전압 380V인 3상 유도전동기의 1차 입력이 50kW이고 1차 전류가 135A일 때 역률은?', o: ['0.52', '0.56', '0.59', '0.64'] },
+  { n: 34, s: '제2과목 전기기기', t: '동기기의 전기자 권선법이 아닌 것은?', o: ['2층 분포권', '단절권', '중권', '전절권'] },
+  { n: 35, s: '제2과목 전기기기', t: '동기 발전기의 병렬 운전 중에 기전력의 위상차가 생기면?', o: ['위상이 일치하는 경우보다 출력이 감소한다', '부하 분담이 변한다', '무효 순환전류가 흘러 전기자 권선이 과열된다', '동기화력이 생겨 두 기전력의 위상이 동상이 되도록 작용한다'] },
+  { n: 36, s: '제2과목 전기기기', t: '동기발전기에서 전기자 전류가 기전력보다 90°만큼 위상이 앞설 때의 전기자 반작용은?', o: ['교차 자화 작용', '감자 작용', '편자 작용', '증자 작용'] },
+  { n: 37, s: '제2과목 전기기기', t: '진성반도체를 P형 반도체로 만들기 위하여 첨가하는 것은?', o: ['인', '인듐', '비소', '안티몬'] },
+  { n: 38, s: '제2과목 전기기기', t: '단상 전파 정류회로에서 전원이 220V이면 부하에 나타나는 전압의 평균값은 약 몇 V인가?', o: ['99', '198', '257.4', '297'] },
+  { n: 39, s: '제2과목 전기기기', t: '그림과 같은 전동기 제어회로에서 전동기 M의 전류 방향으로 올바른 것은? (역률 100%, 사이리스터 점호각 0°)', o: ['항상 A에서 B 방향', '항상 B에서 A 방향', '반주기마다 A→B, B→A로 바뀜', 'S1과 S4, S2와 S3의 동작에 따라 A→B 또는 B→A'] },
+  { n: 40, s: '제2과목 전기기기', t: 'SCR 2개를 역병렬로 접속한 그림과 같은 기호의 명칭은?', o: ['SCR', 'TRIAC', 'GTO', 'UJT'] },
+  { n: 41, s: '제3과목 전기설비', t: '전선 및 케이블의 구비조건으로 맞지 않는 것은?', o: ['도전율이 크고 고유저항이 작을 것', '기계적 강도 및 가요성이 풍부할 것', '내구성이 크고 비중이 클 것', '시공 및 접속이 쉬울 것'] },
+  { n: 42, s: '제3과목 전기설비', t: '저압 가공전선에 대한 설명으로 옳지 않은 것은?', o: ['저압 가공전선은 나전선, 절연전선, 다심형 전선 또는 케이블을 사용해야 한다', '사용전압이 400V 이하인 경우 케이블을 사용할 수 있다', '사용전압이 400V를 초과하고 시가지에 시설하는 경우 지름 5mm 이상의 경동선이어야 한다', '사용전압이 400V를 초과하는 경우 인입용 비닐 절연전선을 사용할 수 있다'] },
+  { n: 43, s: '제3과목 전기설비', t: '다음 중 금속전선관의 종류에서 박강전선관의 규격이 아닌 것은?', o: ['19', '25', '31', '35'] },
+  { n: 44, s: '제3과목 전기설비', t: '다음 중 버스 덕트의 종류가 아닌 것은?', o: ['플로어 버스덕트', '피더 버스덕트', '탭붙이 버스덕트', '플러그인 버스'] },
+  { n: 45, s: '제3과목 전기설비', t: '교통신호등 회로의 사용전압은 몇 V를 넘는 경우 전로에 지락이 생겼을 때 자동적으로 전로를 차단하는 장치를 시설해야 하는가?', o: ['100', '150', '200', '300'] },
+  { n: 46, s: '제3과목 전기설비', t: '접지선의 절연 전선 색상은 특별한 경우를 제외하고는 어느 색으로 표시하여야 하는가?', o: ['흑색', '녹색', '녹색-노란색', '녹색-적색'] },
+  { n: 47, s: '제3과목 전기설비', t: '보조 접지극 2개를 이용하여 계기판의 눈금이 0을 가리키는 순간의 저항 다이얼 값을 읽어 접지저항을 측정하는 방법은?', o: ['캘빈더블 브릿지', '휘트스톤 브릿지', '콜라우시 브릿지', '접지저항계'] },
+  { n: 48, s: '제3과목 전기설비', t: '접지 공사에서 접지극으로 동판을 사용하는 경우 면적이 몇 ㎠ 편면 이상이어야 하는가?', o: ['300', '600', '900', '1200'] },
+  { n: 49, s: '제3과목 전기설비', t: '기동 시 발생하는 기동전류에 대해 동작하지 않는 퓨즈의 종류로 옳은 것은?', o: ['플러그 퓨즈', '전동기용 퓨즈', '온도 퓨즈', '텅스텐 퓨즈'] },
+  { n: 50, s: '제3과목 전기설비', t: '사람의 감전을 방지하기 위하여 설치하는 주택용 누전차단기는 정격감도전류와 동작시간이 얼마 이하여야 하는가?', o: ['30mA, 0.03초', '3mA, 0.03초', '300mA, 0.3초', '30mA, 0.3초'] },
+  { n: 51, s: '제3과목 전기설비', t: '정격전류가 60A일 때 주택용 배선차단기의 동작시간은 얼마 이내인가?', o: ['15분', '30분', '60분', '120분'] },
+  { n: 52, s: '제3과목 전기설비', t: '철근 콘크리트주로 전장 15m, 설계하중 7.8kN인 지지물을 논, 기타 지반이 약한 곳 이외에 시설할 때 묻히는 깊이는 기준보다 몇 cm를 가산하여야 하는가?', o: ['10', '30', '50', '70'] },
+  { n: 53, s: '제3과목 전기설비', t: '전선로의 직선 부분을 지지하는 애자는?', o: ['핀애자', '지지애자', '가지애자', '구형애자'] },
+  { n: 54, s: '제3과목 전기설비', t: '다음 중 래크를 사용하는 장소는?', o: ['저압가공전선로', '저압지중전선로', '고압가공전선로', '고압지중전선로'] },
+  { n: 55, s: '제3과목 전기설비', t: '인류하는 곳이나 분기하는 곳에 사용하는 애자는?', o: ['구형애자', '가지애자', '새클애자', '현수애자'] },
+  { n: 56, s: '제3과목 전기설비', t: '가공 전선로의 지지물에 시설하는 지선의 안전율은 얼마 이상이어야 하는가?', o: ['2', '2.5', '3', '3.5'] },
+  { n: 57, s: '제3과목 전기설비', t: '배선설계를 위한 전등 및 소형 전기기계기구의 부하용량 산정 시 표준부하를 20VA/㎡으로 적용하여야 하는 건축물은?', o: ['교회, 극장', '호텔, 병원', '은행, 상점', '아파트, 미용원'] },
+  { n: 58, s: '제3과목 전기설비', t: '다음 중 배선차단기의 기호로 옳은 것은?', o: ['MCCB', 'ELB', 'ACB', 'DS'] },
+  { n: 59, s: '제3과목 전기설비', t: '수변전설비 구성기기의 계기용 변압기(PT, VT) 설명으로 맞는 것은?', o: ['높은 전압을 낮은 전압으로 변성하는 기기이다', '높은 전류를 낮은 전류로 변성하는 기기이다', '회로에 병렬로 접속하여 사용하는 기기이다', '부족전압트립코일의 전원으로 사용된다'] },
+  { n: 60, s: '제3과목 전기설비', t: '옥측 또는 옥외에 시설하는 배전반 및 분전반을 시설하는 경우에 사용하는 케이블로 옳은 것은?', o: ['난연성 케이블', '광섬유 케이블', '차폐 케이블', '수밀형 케이블'] }
+];
+
+const answerKey = [
+  1, 3, 1, 3, 2, 2, 0, 3, 1, 3,
+  3, 0, 2, 1, 0, 0, 0, 2, 1, 3,
+  0, 0, 2, 1, 3, 1, 2, 3, 0, 1,
+  1, 2, 1, 3, 3, 3, 1, 1, 0, 1,
+  2, 3, 3, 0, 1, 2, 3, 2, 1, 0,
+  2, 1, 0, 0, 3, 1, 1, 0, 0, 3
+];
+
+const explanations = {
+  1: '강자성체가 아닌 물질 중 자화가 거의 되지 않는 물질을 비자성체라고 합니다.',
+  2: '대전체를 가까이 했을 때 도체 내부 전하가 재배치되는 현상은 정전유도입니다.',
+  3: '전위는 거리의 역수에 비례하므로 V = 9×10^9×4×10^-8×(1/2 - 1/4) = 90V입니다.',
+  4: '자기저항은 ℓ/(μA)이고 μ = μ0μr를 대입하면 약 9994.93 AT/Wb가 됩니다.',
+  5: '전구 저항은 R = V²/P이므로 30W 전구가 더 큰 저항을 가져 직렬에서 더 밝게 켜집니다.',
+  6: '유도기전력의 방향은 원인이 되는 자속 변화에 반대가 되도록 생기므로 렌츠의 법칙을 따릅니다.',
+  7: '평행도선 사이 힘 공식 F/l = 2×10^-7×I²/d를 이용하면 I² = 9이므로 전류는 3A입니다.',
+  8: '두 코일이 직각이면 쇄교자속이 없어서 상호인덕턴스는 0입니다.',
+  9: 'e = LΔI/Δt이므로 L = eΔt/ΔI = 2×10^-4×0.1/0.1 = 2×10^-4H = 0.2mH입니다.',
+  10: '주기는 T = 1/f이므로 1/10 = 0.1초입니다.',
+  11: '유도리액턴스 XL = 2πfL ≈ 7.2Ω이고 전압은 V = IXL ≈ 36V입니다.',
+  12: '합성리액턴스는 8 - 5 = 3Ω, 임피던스는 5Ω이므로 역률은 4/5 = 0.8입니다.',
+  13: 'RC 병렬회로의 어드미턴스는 √((1/R)^2 + (ωC)^2)이고 임피던스는 그 역수입니다.',
+  14: '유도리액턴스는 주파수에 비례하므로 주파수가 반이 되면 50Ω도 25Ω으로 줄어듭니다.',
+  15: '직렬공진에서는 임피던스가 최소가 되어 전류가 최대가 됩니다.',
+  16: '유효전력의 단위는 와트 W입니다.',
+  17: '임피던스는 √(8² + 6²) = 10Ω, 전류는 200/10 = 20A, 역률은 8/10 = 0.8입니다.',
+  18: '평형 3상에서는 전체 소비전력이 각 상의 합이므로 3P입니다.',
+  19: '비정현파의 원인은 자화특성 비선형성 등과 관련이 크고, 옴의 법칙은 원인과 거리가 멉니다.',
+  20: '대칭 Y-Δ 변환에서는 Δ 각 변 저항이 Y 각 변의 3배이므로 45Ω입니다.',
+  21: '공극에 자속을 알맞게 분포시키는 자성 재료편은 자극편입니다.',
+  22: '전압변동률은 (무부하전압 - 정격전압)/정격전압 × 100% 입니다.',
+  23: '권수비가 일정하므로 6000×220/13200 = 100V입니다.',
+  24: '규약효율은 출력/(출력 + 손실) × 100%로 정의합니다.',
+  25: '주상변압기는 보통 절연유를 넣고 자연 대류로 식히는 유입 자냉식을 사용합니다.',
+  26: '여러 변압기를 한 조로 묶은 단위를 변압기 뱅크라고 합니다.',
+  27: '저압을 고압으로 승압할 때는 선간전압 관계상 Δ-Y 결선이 사용됩니다.',
+  28: '불평형 차전류와 평형 전류의 비율을 기준으로 동작하는 것은 비율 차동 계전기입니다.',
+  29: '동기속도 Ns = 120f/P에서 3600 = 120×60/P이므로 극수는 2극입니다.',
+  30: '제시 정답 기준으로 해당 결선도는 3상 4극 Y결선으로 분류됩니다.',
+  31: '정지 시 회전자 속도는 0이므로 슬립 s = 1입니다.',
+  32: '돌출극 끝에 단락고리를 두는 구조는 셰이딩 코일형 단상 유도전동기입니다.',
+  33: '입력식 P = √3VIcosθ에서 cosθ = 50000/(√3×380×135) ≈ 0.56입니다.',
+  34: '중권은 직류기 권선법이며 동기기 전기자 권선법에는 해당하지 않습니다.',
+  35: '병렬 운전 중 위상차가 생기면 동기화력이 작용해 위상을 다시 맞추려 합니다.',
+  36: '전기자전류가 기전력보다 90도 앞서면 증자 작용을 합니다.',
+  37: 'P형 반도체는 3가 원소를 첨가해 만들며 보기 중 인듐이 해당합니다.',
+  38: '단상 전파정류 평균전압은 약 0.9E이므로 0.9×220 = 198V입니다.',
+  39: '브리지 제어에서는 점호되는 소자 조합에 따라 전동기 전류 방향이 양방향으로 바뀔 수 있습니다.',
+  40: 'SCR 두 개를 역병렬로 묶은 등가 소자 기호는 TRIAC입니다.',
+  41: '전선은 가벼울수록 유리하므로 비중이 클 것을 조건으로 삼지는 않습니다.',
+  42: '400V 초과 저압 가공전선에는 인입용 비닐 절연전선을 사용할 수 없으므로 4번이 틀립니다.',
+  43: '박강전선관 규격에 35는 포함되지 않습니다.',
+  44: '버스 덕트 종류에는 플러그인 버스라는 명칭을 쓰지 않으므로 4번이 답입니다.',
+  45: '교통신호등 회로는 사용전압이 150V를 넘으면 지락 시 자동 차단장치를 시설해야 합니다.',
+  46: '접지선 절연 색상은 원칙적으로 녹색-노란색 조합을 사용합니다.',
+  47: '보조 접지극 2개를 이용해 직접 눈금을 읽는 방식은 접지저항계에 의한 측정입니다.',
+  48: '동판 접지극은 편면 면적이 900㎠ 이상이어야 합니다.',
+  49: '기동전류에 의해 불필요하게 용단되지 않도록 만든 것은 전동기용 퓨즈입니다.',
+  50: '주택용 누전차단기는 통상 정격감도전류 30mA, 동작시간 0.03초 이하입니다.',
+  51: '정격전류 60A 주택용 배선차단기의 동작시간 기준은 60분 이내입니다.',
+  52: '해당 철근 콘크리트주는 기준보다 30cm를 가산해 매설합니다.',
+  53: '전선로의 직선 부분을 지지하는 애자는 핀애자입니다.',
+  54: '래크는 일반적으로 고압가공전선로에서 사용합니다.',
+  55: '인류점이나 분기점에는 인장력을 받는 새클애자를 사용합니다.',
+  56: '가공 전선로 지선의 안전율은 2.5 이상이어야 합니다.',
+  57: '표준부하 20VA/㎡ 적용 대상은 호텔, 병원입니다.',
+  58: '배선차단기 기호는 MCCB입니다.',
+  59: 'PT, VT는 높은 전압을 낮은 전압으로 변성하는 계기용 변압기입니다.',
+  60: '옥외 배전반·분전반에는 수분 침투를 막기 위한 수밀형 케이블을 사용합니다.'
+};
+
+const questions = rawQuestions.map((question, index) => ({
+  ...question,
+  a: answerKey[index],
+  e: explanations[question.n]
+}));
+
+const storageKey = 'electricExam2021Round2Answers';
+const storedAnswers = localStorage.getItem(storageKey);
+const submittedAt = localStorage.getItem('electricExam2021Round2SubmittedAt');
+const answers = storedAnswers ? JSON.parse(storedAnswers) : {};
+const hasSubmission = submittedAt !== null;
+
+const resultLabel = document.getElementById('resultLabel');
+const resultIconWrap = document.getElementById('resultIconWrap');
+const resultIcon = document.getElementById('resultIcon');
+const scoreValue = document.getElementById('scoreValue');
+const statusBadge = document.getElementById('statusBadge');
+const statusDescription = document.getElementById('statusDescription');
+const correctCount = document.getElementById('correctCount');
+const wrongCount = document.getElementById('wrongCount');
+const subjectBreakdown = document.getElementById('subjectBreakdown');
+const questionMap = document.getElementById('questionMap');
+const mapSummary = document.getElementById('mapSummary');
+const wrongList = document.getElementById('wrongList');
+const explanationCount = document.getElementById('explanationCount');
+const emptyState = document.getElementById('emptyState');
+
+function subjectRange(label, from, to) {
+  return { label, items: questions.filter((q) => q.n >= from && q.n <= to) };
+}
+
+const subjects = [
+  subjectRange('제1과목 전기이론', 1, 20),
+  subjectRange('제2과목 전기기기', 21, 40),
+  subjectRange('제3과목 전기설비', 41, 60)
+];
+
+function renderEmpty() {
+  subjects.forEach((subject) => {
+    const row = document.createElement('div');
+    row.innerHTML = `
+      <div class="flex justify-between text-sm font-semibold">
+        <span class="text-primary">${subject.label}</span>
+        <span class="text-muted">--</span>
+      </div>
+      <div class="mt-2 h-2 overflow-hidden rounded-full bg-cream"><div class="h-full w-0 rounded-full bg-primary"></div></div>
+    `;
+    subjectBreakdown.appendChild(row);
+  });
+
+  for (let i = 1; i <= 60; i += 1) {
+    const tile = document.createElement('div');
+    tile.className = 'flex aspect-square items-center justify-center rounded-xl border border-line bg-slate-50 text-xs font-bold text-slate-400';
+    tile.textContent = String(i).padStart(2, '0');
+    questionMap.appendChild(tile);
+  }
+}
+
+function renderResults() {
+  const wrongItems = [];
+  let correct = 0;
+
+  questions.forEach((question) => {
+    const picked = answers[String(question.n)];
+    if (picked === question.a) {
+      correct += 1;
+    } else {
+      wrongItems.push({ question, picked });
+    }
+  });
+
+  const score = Math.round((correct / questions.length) * 100);
+  const pass = score >= 60;
+  const wrong = questions.length - correct;
+
+  resultLabel.textContent = pass ? '합격입니다' : '불합격입니다';
+  scoreValue.textContent = String(score);
+  scoreValue.className = `text-6xl font-headline font-extrabold ${pass ? 'text-primary' : 'text-slate-400'}`;
+  statusBadge.textContent = pass ? '합격 (PASS)' : '불합격 (FAIL)';
+  statusBadge.className = `mt-4 inline-flex rounded-full px-4 py-2 text-sm font-bold ${pass ? 'bg-active text-primary' : 'bg-slate-100 text-slate-500'}`;
+  statusDescription.textContent = pass
+    ? `총 ${correct}문항을 맞혀 합격 기준 60점을 넘었습니다.${submittedAt ? ' 제출 결과가 반영되었습니다.' : ''}`
+    : `총 ${wrong}문항이 오답 또는 미응답으로 처리되어 합격 기준 60점에 미달했습니다.`;
+  correctCount.textContent = String(correct);
+  wrongCount.textContent = String(wrong);
+  mapSummary.textContent = `${correct}문항 정답 / ${wrong}문항 오답`;
+  explanationCount.textContent = `${wrong}문항 해설`;
+
+  resultIconWrap.className = `flex h-20 w-20 items-center justify-center rounded-full border-2 ${pass ? 'border-primary bg-active text-primary' : 'border-line bg-fail text-slate-300'}`;
+  resultIcon.style.fontVariationSettings = pass ? `'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 24` : `'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24`;
+
+  subjects.forEach((subject) => {
+    const solved = subject.items.filter((item) => answers[String(item.n)] === item.a).length;
+    const percent = Math.round((solved / subject.items.length) * 100);
+    const barColor = percent >= 60 ? 'bg-secondary' : 'bg-danger';
+    const textColor = percent >= 60 ? 'text-secondary' : 'text-danger';
+    const row = document.createElement('div');
+    row.innerHTML = `
+      <div class="flex justify-between text-sm font-semibold">
+        <span class="text-primary">${subject.label}</span>
+        <span class="${textColor}">${percent}%</span>
+      </div>
+      <div class="mt-2 h-2 overflow-hidden rounded-full bg-cream">
+        <div class="h-full rounded-full ${barColor}" style="width:${percent}%"></div>
+      </div>
+      <p class="mt-2 text-xs text-muted">${solved} / ${subject.items.length} 정답</p>
+    `;
+    subjectBreakdown.appendChild(row);
+  });
+
+  questions.forEach((question) => {
+    const picked = answers[String(question.n)];
+    const isCorrect = picked === question.a;
+    const tile = document.createElement('div');
+    tile.className = `flex aspect-square items-center justify-center rounded-xl border text-xs font-bold ${isCorrect ? 'border-secondary/20 bg-accent text-secondary' : 'border-danger/20 bg-danger/10 text-danger'}`;
+    tile.textContent = String(question.n).padStart(2, '0');
+    questionMap.appendChild(tile);
+  });
+
+  if (wrongItems.length === 0) {
+    emptyState.textContent = '모든 문제를 맞혔습니다. 체크 마크와 총점이 합격 상태로 표시됩니다.';
+    return;
+  }
+
+  emptyState.classList.add('hidden');
+  wrongItems.forEach(({ question, picked }) => {
+    const card = document.createElement('article');
+    card.className = 'rounded-[28px] border border-line bg-cream/60 p-6';
+    const pickedText = picked === undefined ? '미응답' : `${picked + 1}번. ${question.o[picked]}`;
+    const correctText = `${question.a + 1}번. ${question.o[question.a]}`;
+    card.innerHTML = `
+      <div class="flex flex-wrap items-center gap-3">
+        <span class="rounded-full bg-danger/10 px-3 py-1 text-xs font-bold text-danger">오답</span>
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-muted">${question.s}</span>
+      </div>
+      <h4 class="mt-4 text-xl font-headline font-extrabold text-primary">${String(question.n).padStart(2, '0')}번</h4>
+      <p class="mt-3 text-base leading-8 text-ink">${question.t}</p>
+      <div class="mt-5 grid gap-3 md:grid-cols-2">
+        <div class="rounded-2xl bg-white px-4 py-4">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-muted">내 답안</p>
+          <p class="mt-2 text-sm font-semibold text-ink">${pickedText}</p>
+        </div>
+        <div class="rounded-2xl bg-white px-4 py-4">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-muted">정답</p>
+          <p class="mt-2 text-sm font-semibold text-primary">${correctText}</p>
+        </div>
+      </div>
+      <div class="mt-5 rounded-2xl border border-line bg-white px-4 py-4">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-muted">풀이</p>
+        <p class="mt-2 text-sm leading-7 text-muted">${question.e}</p>
+      </div>
+    `;
+    wrongList.appendChild(card);
+  });
+}
+
+if (hasSubmission) {
+  renderResults();
+} else {
+  renderEmpty();
+}
+</script>
+</body>
+</html>
