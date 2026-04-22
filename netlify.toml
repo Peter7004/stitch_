@@ -1,0 +1,39 @@
+# Netlify 배포 설정
+
+[build]
+  command = "echo 'Static site - no build needed'"
+  publish = "."
+
+# 라우팅 규칙
+[[redirects]]
+  from = "/*"
+  to = "/main/index.html"
+  status = 200
+
+# 보안 헤더
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# 캐시 설정 (HTML은 항상 새로 받기)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# CSS, JS 캐시 (1년)
+[[headers]]
+  for = "/*.{js,css}"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# 이미지 캐시 (30일)
+[[headers]]
+  for = "/*.{png,jpg,jpeg,gif,webp,svg}"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"

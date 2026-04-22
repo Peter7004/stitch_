@@ -1,0 +1,298 @@
+<!DOCTYPE html><html lang="ko"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>전기마스터 - ElecMaster</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "surface-tint": "#4059aa",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-secondary-container": "#006f66",
+                    "background": "#f7f9fb",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-container": "#a4acc5",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-on-surface": "#eff1f3",
+                    "outline": "#757682",
+                    "surface": "#f7f9fb",
+                    "on-primary-container": "#90a8ff",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#1e3a8a",
+                    "on-tertiary": "#ffffff",
+                    "primary": "#00236f",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-primary-fixed": "#00164e",
+                    "outline-variant": "#c5c5d3",
+                    "primary-fixed-dim": "#b6c4ff",
+                    "tertiary": "#222a3e",
+                    "tertiary-fixed": "#dae2fd",
+                    "secondary": "#006a61",
+                    "tertiary-container": "#384055",
+                    "surface-bright": "#f7f9fb",
+                    "on-surface": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "on-background": "#191c1e",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#b6c4ff",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-surface-variant": "#444651",
+                    "on-primary-fixed-variant": "#264191",
+                    "surface-container": "#eceef0",
+                    "secondary-container": "#86f2e4",
+                    "on-secondary-fixed": "#00201d",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "primary-fixed": "#dce1ff",
+                    "on-tertiary-fixed": "#131b2e",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "secondary-fixed": "#89f5e7",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .editorial-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
+        .tonal-transition { background: linear-gradient(180deg, #f7f9fb 0%, #eceef0 100%); }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); }
+    </style>
+</head>
+<body class="text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-slate-950/80 backdrop-blur-xl">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-6 h-20">
+<div class="text-2xl font-bold tracking-tight text-[#00236f] dark:text-white" style="">ElecMaster</div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="text-slate-600 dark:text-slate-400 hover:text-[#00236f] text-sm font-medium Inter tracking-wide transition-all duration-300" href="../study/code.html" style="">핵심요약</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-[#00236f] text-sm font-medium Inter tracking-wide transition-all duration-300" href="../quiz/code.html" style="">기출문제</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-[#00236f] text-sm font-medium Inter tracking-wide transition-all duration-300" href="../ai/code.html" style="">AI 튜터</a>
+</div>
+<div class="flex items-center"></div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[870px] flex items-center overflow-hidden bg-surface">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary-container rounded-full blur-[120px] -mr-48 -mt-48"></div>
+<div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-container rounded-full blur-[100px] -ml-24 -mb-24"></div>
+</div>
+<div class="max-w-7xl mx-auto px-6 w-full editorial-grid relative z-10">
+<div class="col-span-12 lg:col-span-7 flex flex-col justify-center">
+<span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold tracking-widest mb-6 uppercase" style="">Professional Certification</span>
+<h1 class="text-5xl md:text-7xl font-extrabold text-primary leading-[1.1] tracking-tight mb-8" style="">
+                        전기기능사 합격,<br>전기마스터가 답이다!
+                    </h1>
+<p class="text-lg md:text-xl text-on-surface-variant max-w-xl mb-10 leading-relaxed font-body" style="">
+                        가장 정교한 AI 튜터와 압도적인 기출 복원력으로 전기 기술사의 꿈을 현실로 만듭니다. 복잡한 수식부터 실전 배치까지, 당신의 지능형 파트너가 되어드립니다.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<a href="#learning-ecosystem" class="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] inline-block" style="">
+                            Get Started
+                        </a>
+</div>
+</div>
+<!-- Countdown Widget -->
+<div class="col-span-12 lg:col-span-5 flex items-center">
+<div class="w-full surface-container-lowest p-8 rounded-3xl shadow-2xl shadow-primary/5 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-xl font-bold text-primary" style="">다음 시험 디데이</h3>
+<span class="text-secondary font-bold text-sm bg-secondary/10 px-3 py-1 rounded-full" style="">2026년 제3회 필기</span>
+</div>
+<div class="grid grid-cols-4 gap-4 text-center">
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<span class="block text-3xl font-extrabold text-primary mb-1" id="countdown-days" style="">00</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold" style="">Days</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<span class="block text-3xl font-extrabold text-primary mb-1" id="countdown-hours" style="">00</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold" style="">Hrs</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<span class="block text-3xl font-extrabold text-primary mb-1" id="countdown-minutes" style="">00</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold" style="">Min</span>
+</div>
+<div class="bg-surface-container-low p-4 rounded-2xl">
+<span class="block text-3xl font-extrabold text-primary mb-1" id="countdown-seconds" style="">00</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold" style="">Sec</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Cards -->
+<section id="learning-ecosystem" class="py-24 bg-surface-container-low">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-16">
+<h2 class="text-4xl font-extrabold text-primary mb-4 tracking-tight" style="">지능형 학습 에코시스템</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto" style="">전기기능사 합격을 위한 3단계 마스터 커리큘럼입니다. 대충대충 설계된 콘텐츠로 학습 효율을 극대화하세요.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="group surface-container-lowest p-10 rounded-[2.5rem] hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 border border-transparent hover:border-primary-container/20">
+<div class="w-16 h-16 rounded-2xl bg-primary-container flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">description</span>
+</div>
+<h3 class="text-2xl font-bold text-primary mb-4" style="">핵심요약</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6 font-body" style="">
+                            시험에 반드시 나오는 공식과 핵심 키워드를 시각적으로 구조화하여 제공합니다.
+                        </p>
+<a class="flex items-center text-primary font-bold text-sm cursor-pointer hover:gap-3 transition-all duration-300" href="../study/code.html" style="">
+                            학습하기 <span class="material-symbols-outlined text-sm ml-2" style="">arrow_forward</span>
+</a>
+</div>
+<!-- Feature 2 -->
+<div class="group surface-container-lowest p-10 rounded-[2.5rem] hover:shadow-2xl hover:shadow-secondary/10 transition-all duration-500 border border-transparent hover:border-secondary/20">
+<div class="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">quiz</span>
+</div>
+<h3 class="text-2xl font-bold text-primary mb-4" style="">기출문제</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6 font-body" style="">
+                            최근 10개년 기출 데이터를 완전 복원했습니다. CBT 환경과 동일한 실전 모의고사를 통해 실전 감각을 체계적으로 훈련합니다.
+                        </p>
+<a class="flex items-center text-secondary font-bold text-sm cursor-pointer hover:gap-3 transition-all duration-300" href="../quiz/code.html" style="">
+                            문제풀기 <span class="material-symbols-outlined text-sm ml-2" style="">arrow_forward</span>
+</a>
+</div>
+<!-- Feature 3 -->
+<div class="group surface-container-lowest p-10 rounded-[2.5rem] hover:shadow-2xl hover:shadow-tertiary-container/10 transition-all duration-500 border border-transparent hover:border-tertiary-container/20">
+<div class="w-16 h-16 rounded-2xl bg-tertiary-container flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: &quot;FILL&quot; 1;">psychology</span>
+</div>
+<h3 class="text-2xl font-bold text-primary mb-4" style="">AI 학습 챗봇</h3>
+<p class="text-on-surface-variant leading-relaxed mb-6 font-body" style="">
+                            이해가 안 되는 전기 이론, 수식 풀이 과정을 실시간으로 물어보세요. 24시간 상주하는 AI 튜터가 맞춤형 답변을 제공합니다.
+                        </p>
+<a class="flex items-center text-tertiary-container font-bold text-sm cursor-pointer hover:gap-3 transition-all duration-300" href="../ai/code.html" style="">
+                            질문하기 <span class="material-symbols-outlined text-sm ml-2" style="">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Social Proof Section -->
+<section class="py-24 bg-surface">
+<div class="max-w-7xl mx-auto px-6 editorial-grid items-center">
+<div class="col-span-12 lg:col-span-6">
+<h2 class="text-4xl md:text-5xl font-extrabold text-primary mb-6 leading-tight" style="">압도적인 결과가<br>신뢰를 증명합니다</h2>
+<p class="text-xl text-on-surface-variant mb-12 max-w-lg" style="">
+                        전기마스터는 단순한 강의입니다. 0만 명이 넘는 선배들이 선택한 입증된 합격 로드맵입니다.
+                    </p>
+<div class="space-y-8">
+<div class="flex items-end gap-4">
+<div class="text-6xl font-black text-secondary" style="">0</div>
+<div class="text-lg font-bold text-primary pb-2 uppercase tracking-wide" style="">누적 합격자</div>
+</div>
+<p class="text-sm text-on-surface-variant font-medium" style="">매년 0% 성장률을 기록하며 업계 반면교사를 제시합니다.</p>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-6 relative">
+<div class="grid grid-cols-2 gap-4">
+<div class="aspect-square rounded-3xl overflow-hidden shadow-xl transform translate-y-8">
+<img class="w-full h-full object-cover" data-alt="close up of electrical engineer technician working on industrial control panel with wires and technical equipment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjHbZQN-jfOiyTcpggHe3AiuzPf_dFeEap5PnWNuQeopXaR8rRNmUdth9cF3o1gr3T7jd5GpWrCUMPuyN2UqEnp2VaLb6Ehs7Zzrqj8kwEMKg18UfMflRtc5n5arSGpLJXutCp9fkoPfZbkUSLoF7sFa9269PMCIYQEZ7sD8nfVMwCDM0xEDSuXJReEWbqIuqQhO--Te1OoMbc6QAVmoWwTuj--K2adHmz_DUmQRIKkPNA9jEk1jE_xAtd14H8POSRI1EWTsE1WqoE" style="">
+</div>
+<div class="aspect-square rounded-3xl overflow-hidden shadow-xl">
+<img class="w-full h-full object-cover" data-alt="focused student using digital tablet and stylus to study engineering diagrams in a modern clean library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9riIjbAET_Q5UQEej15q6bRsLdqgq1EbCAZr2bDON7GFZr_6l-bfy2r9ToYrxP1-CmngrH0I7WBHkm-xaJbUPjuRag3VL06mkmdq6sZZxuIvDIax68xL4acr5tbiwELXt1S-4sZkKBtIaN4NtjR0WY_2jcVXjZiOZKdoYWvm4cOyO1uFqZ1vyB_MtHy_AowQH0yNgIc2eNRvRz6rB0uvq9IYleS_BlxJUydz_JjwgAQfcKO-8mcgh4M5FxHJSR11VmyZESbSv_LRy" style="">
+</div>
+<div class="aspect-square rounded-3xl overflow-hidden shadow-xl transform translate-y-8">
+<img class="w-full h-full object-cover" data-alt="close up of motherboard circuits and microchips with blue technical lighting reflecting on surfaces" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0FbxoSGawlqNPJ3MxC3n2IwCRBkIbSnQ_jaWl49hNtpl7zIYbVeiSVSNW2knsy98ycSHy1idHSYUUI2sPoHalPnb-DkTq66H2pcd67AFvMDG8PKxQs85PXVj1oo78VGp9g10DZA9YuWyKvxdyPbhXvc5MtvAyrZGNb7K55vngYdkhpJINA_QApGhqyJIUGoLSrPZxfEH-l32w_eiuxmK5W9CLgkmf-kJQTmuOSE_LYEx6CY_oP47yM3nG8IpWTFkm9tOZy4hkcldE" style="">
+</div>
+<div class="aspect-square rounded-3xl overflow-hidden shadow-xl">
+<img class="w-full h-full object-cover" data-alt="group of young professionals in a modern office having an intellectual discussion about a technical project" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiUP6WRNHD4MdqkZOAKbzWYxrEwmSnmqgmhQheSeX9Ox7TIJp8-PLNP9O4NxyKb8NSmqwUkMklaBe4hH31vSek1XekYCZIhoh0Y332LxnKzRaSW4O9GsPEYQL89W9O258w0v3jK--rTq2rDSb8ObJDUCKvsBC1z47zsRFjI1PagLSHjbm13WJvlOu0nQ8aiHxbF4FiRjGpObHbKwJKNX8Qo-8t0wCOSQ0YMmq4ot2gNiUvemXOe1qiUiMP4O72-zYzC-5kqkMPRXZ8" style="">
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Formula Bar (Signature Component) -->
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-6 border-t border-slate-200/50 dark:border-slate-800/50 bg-slate-100 dark:bg-slate-950">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+<div>
+<div class="text-lg font-black text-[#00236f] dark:text-white mb-4" style="">ElecMaster</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium Inter tracking-wide mb-6" style="">
+                    © 2024 ElecMaster Technical Institute. All rights reserved.
+                </p>
+<div class="flex gap-4">
+<a class="text-slate-500 hover:text-[#006a61] transition-colors" href="#" style=""><span class="material-symbols-outlined" style="">social_leaderboard</span></a>
+<a class="text-slate-500 hover:text-[#006a61] transition-colors" href="#" style=""><span class="material-symbols-outlined" style="">share</span></a>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-3">
+<a class="block text-slate-500 dark:text-slate-400 text-sm font-medium Inter hover:text-[#006a61] transition-colors" href="#" style="">Terms of Service</a>
+<a class="block text-slate-500 dark:text-slate-400 text-sm font-medium Inter hover:text-[#006a61] transition-colors" href="#" style="">Privacy Policy</a>
+</div>
+<div class="space-y-3">
+<a class="block text-slate-500 dark:text-slate-400 text-sm font-medium Inter hover:text-[#006a61] transition-colors" href="#" style="">Accreditation</a>
+<a class="block text-slate-500 dark:text-slate-400 text-sm font-medium Inter hover:text-[#006a61] transition-colors" href="#" style="">Contact Support</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+function updateCountdown() {
+  const targetDate = new Date('2026-06-27T00:00:00').getTime();
+  
+  function countdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+    
+    if (distance < 0) {
+      document.getElementById('countdown-days').textContent = '00';
+      document.getElementById('countdown-hours').textContent = '00';
+      document.getElementById('countdown-minutes').textContent = '00';
+      document.getElementById('countdown-seconds').textContent = '00';
+      return;
+    }
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+    document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+  }
+  
+  countdown();
+  setInterval(countdown, 1000);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', updateCountdown);
+} else {
+  updateCountdown();
+}
+</script>
+</body></html>

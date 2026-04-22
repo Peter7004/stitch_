@@ -1,0 +1,27 @@
+{
+  "name": "elecmaster",
+  "version": "1.0.0",
+  "description": "전기기능사 시험 준비를 위한 통합 학습 플랫폼",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000 || npx http-server",
+    "dev": "npx http-server",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": [
+    "전기기능사",
+    "기술자격",
+    "학습플랫폼",
+    "기출문제",
+    "AI튜터"
+  ],
+  "author": "ElecMaster Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/elecmaster"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>전기기능사 | 2021년 1회 필기</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Pretendard:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: '#0f3d66',
+          secondary: '#0d8a72',
+          cream: '#f8f6ef',
+          ink: '#18222c',
+          line: '#d8dee6',
+          muted: '#6a7683',
+          card: '#ffffff',
+          accent: '#e7f6f2',
+          active: '#d9e8ff',
+          warn: '#fff1cc'
+        },
+        fontFamily: {
+          headline: ['Manrope', 'sans-serif'],
+          body: ['Pretendard', 'sans-serif']
+        },
+        boxShadow: {
+          soft: '0 18px 50px rgba(15, 61, 102, 0.08)'
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background: radial-gradient(circle at top left, #eef6ff, #f8f6ef 42%, #f3f7f5 100%); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+  .option-card.selected { border-color: #0f3d66; background: #eef4ff; }
+  .qmap-btn.current { background: #0f3d66; color: #fff; border-color: #0f3d66; }
+  .qmap-btn.answered { background: #d9e8ff; color: #0f3d66; border-color: #bfd4fb; }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+  }
+</style>
+</head>
+<body class="font-body text-ink min-h-screen">
+<header class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm shadow-blue-900/5">
+  <div class="flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto relative">
+    <div class="flex items-center gap-8">
+      <span class="text-2xl font-black text-primary dark:text-white tracking-tighter">ElecMaster</span>
+      <nav class="hidden md:flex gap-6">
+        <a class="text-slate-500 font-medium hover:text-primary transition-colors duration-200" href="../main/index.html">메인</a>
+        <a class="text-slate-500 font-medium hover:text-primary transition-colors duration-200" href="../study/code.html">학습하기</a>
+        <a class="text-primary border-b-2 border-primary pb-1 font-headline tracking-tight font-bold" href="../quiz/code.html">기출문제</a>
+        <a class="text-slate-500 font-medium hover:text-primary transition-colors duration-200" href="../ai/code.html">AI 센터</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-primary transition-colors">notifications</span>
+      <span class="material-symbols-outlined text-slate-500 cursor-pointer hover:text-primary transition-colors">account_circle</span>
+    </div>
+    <div class="bg-slate-200/50 h-[1px] w-full absolute bottom-0 left-0"></div>
+  </div>
+</header>
+<div class="min-h-screen grid grid-cols-[280px_minmax(0,1fr)_320px] pt-24">
+  <aside class="border-r border-line/80 bg-white/85 backdrop-blur px-6 py-8">
+    <div class="mb-10">
+      <p class="text-xs font-bold uppercase tracking-[0.3em] text-secondary">Axiom Blue</p>
+      <h1 class="mt-3 text-3xl font-headline font-extrabold text-primary">전기기능사</h1>
+      <p class="mt-2 text-sm text-muted">2021년도 1회 필기 기출문제</p>
+    </div>
+    <div class="space-y-3">
+      <div class="rounded-3xl bg-cream border border-line p-5">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-muted">시험 구성</p>
+        <div class="mt-4 space-y-4 text-sm">
+          <div>
+            <p class="font-semibold text-primary">제1과목 전기이론</p>
+            <p class="text-muted">1번 ~ 20번</p>
+          </div>
+          <div>
+            <p class="font-semibold text-primary">제2과목 전기기기</p>
+            <p class="text-muted">21번 ~ 40번</p>
+          </div>
+          <div>
+            <p class="font-semibold text-primary">제3과목 전기설비</p>
+            <p class="text-muted">41번 ~ 60번</p>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-3xl bg-primary text-white p-5 shadow-soft">
+        <div class="flex items-center justify-between">
+          <p class="text-xs font-bold uppercase tracking-[0.25em] text-white/70">진행 현황</p>
+          <span id="progressPercent" class="text-sm font-bold">0%</span>
+        </div>
+        <div class="mt-4 h-2 rounded-full bg-white/15 overflow-hidden">
+          <div id="progressBar" class="h-full bg-secondary rounded-full" style="width:0%"></div>
+        </div>
+        <p id="progressText" class="mt-3 text-sm text-white/80">0 / 60 문항 선택</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="px-10 py-8">
+    <header class="flex items-center justify-between gap-6">
+      <div>
+        <p id="subjectBadge" class="text-xs font-bold uppercase tracking-[0.25em] text-secondary"></p>
+        <h2 id="questionNumber" class="mt-2 text-4xl font-headline font-extrabold text-primary"></h2>
+      </div>
+      <div class="flex items-center gap-3 rounded-full border border-line bg-white px-5 py-3 shadow-soft">
+        <span class="material-symbols-outlined text-primary">timer</span>
+        <span class="text-sm font-semibold text-muted">2021년 제1회 시험지</span>
+      </div>
+    </header>
+
+    <section class="mt-8 rounded-[32px] border border-line bg-card p-8 shadow-soft">
+      <div class="flex flex-wrap items-center gap-3">
+        <span id="courseBadge" class="rounded-full bg-accent px-4 py-2 text-xs font-bold text-secondary"></span>
+        <span class="rounded-full bg-warn px-4 py-2 text-xs font-bold text-amber-800">객관식 4지선다</span>
+      </div>
+      <p id="questionText" class="mt-6 text-[1.35rem] leading-9 font-medium"></p>
+      <div id="questionFigure" class="mt-6 hidden overflow-hidden rounded-[24px] border border-line bg-cream p-4"></div>
+      <div id="optionList" class="mt-8 grid gap-4"></div>
+    </section>
+
+    <nav class="mt-8 flex items-center justify-between">
+      <button id="prevBtn" class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 font-semibold text-primary transition hover:-translate-x-0.5">
+        <span class="material-symbols-outlined">arrow_back</span>
+        이전 문제
+      </button>
+      <div class="text-sm text-muted"><span id="currentIndexText">1</span> / 60</div>
+      <button id="nextBtn" class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 font-semibold text-primary transition hover:translate-x-0.5">
+        다음 문제
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+    </nav>
+
+    <div class="mt-6 flex justify-end">
+      <button id="submitBtn" class="inline-flex items-center gap-2 rounded-full bg-secondary px-6 py-3 font-semibold text-white shadow-soft transition hover:opacity-90" type="button">
+        제출하기
+        <span class="material-symbols-outlined text-sm">task_alt</span>
+      </button>
+    </div>
+  </main>
+
+  <aside class="border-l border-line/80 bg-white/88 backdrop-blur px-6 py-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-muted">Question Map</p>
+        <h3 class="mt-2 text-2xl font-headline font-extrabold text-primary">60문항</h3>
+      </div>
+      <span class="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-muted">번호 선택</span>
+    </div>
+    <div id="questionMap" class="mt-6 grid grid-cols-5 gap-2"></div>
+    <div class="mt-8 rounded-3xl border border-line bg-cream p-5 text-sm text-muted">
+      <p class="font-semibold text-primary">사용 방법</p>
+      <p class="mt-2">번호를 누르거나 이전/다음 버튼으로 이동할 수 있습니다. 선택한 보기는 화면에 유지됩니다.</p>
+    </div>
+  </aside>
+</div>
+
+<div id="submitModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/45 px-4">
+  <div class="w-full max-w-md rounded-[28px] bg-white p-7 shadow-soft">
+    <div class="flex items-start gap-4">
+      <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-warn text-amber-700">
+        <span class="material-symbols-outlined">warning</span>
+      </div>
+      <div class="flex-1">
+        <p class="text-sm font-bold uppercase tracking-[0.22em] text-muted">제출 확인</p>
+        <h3 class="mt-2 text-2xl font-headline font-extrabold text-primary">시험을 제출할까요?</h3>
+        <p id="submitModalText" class="mt-3 text-sm leading-7 text-muted"></p>
+      </div>
+    </div>
+    <div class="mt-6 flex justify-end gap-3">
+      <button id="continueSolveBtn" class="rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-cream" type="button">다시 풀기</button>
+      <button id="confirmSubmitBtn" class="rounded-full bg-secondary px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90" type="button">그래도 제출하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { n: 1, s: '제1과목 전기이론', t: '물체가 가지고 있는 전기의 양을 뜻하며 물질이 가진 고유한 전기적 성질을 무엇이라고 하는가?', o: ['대전', '전하', '방전', '양자'] },
+  { n: 2, s: '제1과목 전기이론', t: '1Ah는 몇 C인가?', o: ['7200', '3600', '120', '60'] },
+  { n: 3, s: '제1과목 전기이론', t: '4Ω의 저항과 6Ω의 저항을 직렬로 접속할 때 합성 컨덕턴스는 몇 ℧인가?', o: ['0.1', '0.2', '0.5', '2.4'] },
+  { n: 4, s: '제1과목 전기이론', t: '다음 중 패러데이 관(Faraday tube)의 단위 전위차당 보유 에너지는 몇 J인가?', o: ['1', '2', '1/2(εE²)', '1/2'] },
+  { n: 5, s: '제1과목 전기이론', t: '어느 정도 이상으로 전압이 높아지면 급격히 저항이 낮아지는 성질을 이용하여 이상전압으로부터 회로를 보호하는 소자는 무엇인가?', o: ['다이오드', 'SCR', '바리스터', '커패시터'] },
+  { n: 6, s: '제1과목 전기이론', t: '10V와 15V의 전원을 직렬로 연결하고 이 사이에 5Ω의 저항을 넣었을 때 흐르는 전류는 몇 A인가?', o: ['2', '3', '4', '5'] },
+  { n: 7, s: '제1과목 전기이론', t: '저항 R₁, R₂를 병렬로 연결하고 전전류가 I[A]라면 R₁에 흐르는 전류 I₁은?', o: ['I₁ = R₁/(R₁+R₂) × I', 'I₁ = R₂/(R₁+R₂) × I', 'I₁ = (R₁+R₂)/R₁ × I', 'I₁ = (R₁+R₂)/R₂ × I'] },
+  { n: 8, s: '제1과목 전기이론', t: '중첩의 정리를 이용하여 회로를 해석할 때 전압원과 전류원은 각각 어떻게 하여야 하는가?', o: ['전압원-단락, 전류원-개방', '전압원-개방, 전류원-개방', '전압원-개방, 전류원-단락', '전압원-단락, 전류원-단락'] },
+  { n: 9, s: '제1과목 전기이론', t: '빈칸에 들어갈 알맞은 말은? “중첩의 정리를 이용하여 회로를 해석할 때 전압원은 (㉠)하고, 전류원은 (㉡)한다.”', o: ['㉠ 개방 / ㉡ 개방', '㉠ 개방 / ㉡ 단락', '㉠ 단락 / ㉡ 단락', '㉠ 단락 / ㉡ 개방'] },
+  { n: 10, s: '제1과목 전기이론', t: '다음 중 1J과 같은 것은?', o: ['1kcal', '1W/sec', '1W·sec', '860kWh'] },
+  { n: 11, s: '제1과목 전기이론', t: '같은 크기의 저항 4개를 접속하여 얻어지는 경우 중에서 소비전력이 가장 큰 것은?', o: ['직렬과 병렬은 관계없다', '둘 다 같다', '모두 병렬로 접속', '모두 직렬로 접속'] },
+  { n: 12, s: '제1과목 전기이론', t: '“금속 A와 B로 만든 열전쌍과 접점 사이에 임의의 금속 C를 연결해도 C의 양 끝 접점 온도를 똑같이 유지하면 회로의 열기전력은 변화하지 않는다.” 이 설명에 해당하는 것은?', o: ['제벡 효과', '톰슨 효과', '제3 금속의 법칙', '펠티에 법칙'] },
+  { n: 13, s: '제1과목 전기이론', t: '전기력선에 대한 설명으로 틀린 것은?', o: ['같은 전기력선은 흡인한다', '전기력선은 서로 교차하지 않는다', '전기력선은 도체 표면에 수직으로 출입한다', '전기력선은 양전하 표면에서 나와 음전하 표면에서 끝난다'] },
+  { n: 14, s: '제1과목 전기이론', t: '다음 중 전위 단위가 아닌 것은?', o: ['V/m', 'J/C', 'N·m/C', 'V'] },
+  { n: 15, s: '제1과목 전기이론', t: '정전 흡인력에 대한 설명 중 옳은 것은?', o: ['정전 흡인력은 전압의 제곱에 비례한다', '정전 흡인력은 극판 간격에 비례한다', '정전 흡인력은 극판 면적의 제곱에 비례한다', '정전 흡인력은 쿨롱의 법칙으로 직접 계산한다'] },
+  { n: 16, s: '제1과목 전기이론', t: '자기회로의 길이 ℓ[m], 단면적 A[㎡], 투자율 μ[H/m]일 때 자기저항 R[AT/Wb]은?', o: ['R = μℓ / A', 'R = A / μℓ', 'R = ℓ / μA', 'R = μA / ℓ'] },
+  { n: 17, s: '제1과목 전기이론', t: '평균길이 40cm, 권수 10회인 환상 솔레노이드에 4A의 전류가 흐르면 내부 자장의 세기[AT/m]는?', o: ['10', '100', '200', '300'] },
+  { n: 18, s: '제1과목 전기이론', t: '용량리액턴스가 주파수 1kHz일 때 50Ω이라면, 50Hz일 때는 몇 Ω인가?', o: ['10', '100', '1000', '10000'] },
+  { n: 19, s: '제1과목 전기이론', t: 'RL 직렬회로에 직류전압 100V를 가했더니 전류가 20A 흐르고, 교류전압 100V, 60Hz를 인가했더니 전류가 10A 흐를 때 유도성 리액턴스 XL은?', o: ['5', '5√2', '5√3', '10'] },
+  { n: 20, s: '제1과목 전기이론', t: '다음 중 비정현파가 아닌 것은?', o: ['펄스파', '주기 사인파', '삼각파', '사각파'] },
+  { n: 21, s: '제2과목 전기기기', t: '직류발전기에서 계자의 주된 역할은?', o: ['기전력을 유도한다', '자속을 만든다', '정류작용을 한다', '정류자면에 접촉한다'] },
+  { n: 22, s: '제2과목 전기기기', t: '6극 직렬권(파권) 발전기에서 전기자 도체 수 300, 매극 자속수 0.02Wb, 회전수 900rpm일 때 유도기전력은 몇 V인가?', o: ['300', '400', '270', '120'] },
+  { n: 23, s: '제2과목 전기기기', t: '균압선을 설치하여 병렬 운전하는 발전기는?', o: ['타여자 발전기', '분권 발전기', '복권 발전기', '동기기'] },
+  { n: 24, s: '제2과목 전기기기', t: '직류 직권전동기의 회전수 N과 토크 τ의 관계는?', o: ['τ ∝ 1/N', 'τ ∝ 1/N²', 'τ ∝ N', 'τ ∝ N²'] },
+  { n: 25, s: '제2과목 전기기기', t: '직류전동기의 전부하 속도가 1200rpm이고 속도변동률이 2%일 때 무부하 속도는 몇 rpm인가?', o: ['1224', '1236', '1176', '1164'] },
+  { n: 26, s: '제2과목 전기기기', t: '다음 그림과 같은 분권발전기에서 계자전류가 6A, 전기자전류가 100A라면 부하전류는 몇 A인가?', o: ['1.96', '100', '94', '106'], f: `<svg viewBox="0 0 760 480" class="w-full h-auto rounded-[18px] bg-white" xmlns="http://www.w3.org/2000/svg" aria-label="분권발전기 회로도"><rect width="760" height="480" fill="white"/><path d="M44 22 H640" stroke="#111827" stroke-width="2"/><path d="M44 22 V462 H640" stroke="#111827" stroke-width="2"/><circle cx="285" cy="22" r="15" fill="#111827"/><circle cx="285" cy="462" r="15" fill="#111827"/><path d="M285 37 V70 L255 85 L315 110 L255 135 L315 160 L255 185 L285 200 V295" stroke="#111827" stroke-width="2" fill="none"/><circle cx="285" cy="350" r="58" fill="white" stroke="#111827" stroke-width="2"/><text x="285" y="370" text-anchor="middle" font-size="54" font-family="Arial, sans-serif" fill="#111827">A</text><path d="M285 408 V447" stroke="#111827" stroke-width="2"/><path d="M44 175 C12 175 12 218 44 218 C76 218 76 261 44 261 C12 261 12 304 44 304" stroke="#111827" stroke-width="2" fill="none"/><text x="84" y="258" font-size="54" font-family="Arial, sans-serif" fill="#111827">계자</text><text x="340" y="268" font-size="58" font-family="Arial, sans-serif" fill="#111827">전기자</text><text x="624" y="238" font-size="58" font-family="Arial, sans-serif" fill="#111827">부하</text></svg>` },
+  { n: 27, s: '제2과목 전기기기', t: '워드레오나드 방식으로 속도를 제어하는 데 사용되는 전동기는?', o: ['타여자', '직권', '분권', '복권'] },
+  { n: 28, s: '제2과목 전기기기', t: '1차 권수가 3300이고 2차 권수가 330인 변압기의 권수비(turn ratio)는?', o: ['0.1', '0.5', '10', '50'] },
+  { n: 29, s: '제2과목 전기기기', t: '변압기 성층 철심 강판 재료의 규소 함유량은 대략 몇 %인가?', o: ['8', '6', '4', '2'] },
+  { n: 30, s: '제2과목 전기기기', t: '특별한 냉각법을 사용하지 않고 공기의 대류작용으로 변압기 본체가 공기로 자연 냉각되도록 한 방식은?', o: ['건식 풍냉식', '건식 자냉식', '유입 자냉식', '유입 풍냉식'] },
+  { n: 31, s: '제2과목 전기기기', t: '기전력에 고조파를 포함하고 중성점이 접지되어 있을 때 선로에 제3고조파를 주로 포함하는 충전전류가 흐르며 통신장해를 일으키는 3상 결선법은?', o: ['Δ-Δ 결선', 'Y-Y 결선', 'Y-Δ 결선', 'Δ-Y 결선'] },
+  { n: 32, s: '제2과목 전기기기', t: '단상 변압기 3대(100kVA × 3)를 Δ결선하여 운전 중 1대 고장으로 V결선한 경우 출력은?', o: ['100kVA', '173kVA', '245kVA', '300kVA'] },
+  { n: 33, s: '제2과목 전기기기', t: '용량이 250kVA인 변압기 3대를 Δ결선 운전 중 1대가 고장나 V결선으로 운전하는 경우 출력은?', o: ['250', '433', '450', '500'] },
+  { n: 34, s: '제2과목 전기기기', t: '8극 60Hz 3상 유도전동기의 동기속도는 몇 rpm인가?', o: ['900', '1200', '1500', '1800'] },
+  { n: 35, s: '제2과목 전기기기', t: '일정 주파수 전원에서 운전하는 3상 유도전동기의 전원 전압이 90%가 되었다면 토크는 약 몇 %가 되는가?', o: ['10', '64', '81', '90'] },
+  { n: 36, s: '제2과목 전기기기', t: '유도전동기의 출력특성곡선에서 슬립을 나타내는 곡선 번호는?', o: ['1', '2', '3', '4'] },
+  { n: 37, s: '제2과목 전기기기', t: '동기 와트 P2, 출력 P0, 슬립 s, 동기속도 Ns, 회전속도 N, 2차 동손 P2c일 때 2차 효율 표기로 틀린 것은?', o: ['1 - s', 'P2c / P2', 'P0 / P2', 'N / Ns'] },
+  { n: 38, s: '제2과목 전기기기', t: '슬립 4%인 유도전동기의 등가 부하저항은 2차 저항의 몇 배인가?', o: ['5', '19', '20', '24'] },
+  { n: 39, s: '제2과목 전기기기', t: '저항만의 부하에서 사이리스터를 이용한 전파정류 회로의 출력식으로 옳은 것은?', o: ['Ed = 0.9E(1 + cosα)', 'Ed = 0.45E(1 + cosα)', 'Ed = 0.9Ecosα', 'Ed = 0.45Ecosα'] },
+  { n: 40, s: '제2과목 전기기기', t: 'VVVF(Variable Voltage Variable Frequency)는 어떤 전동기의 속도 제어에 사용되는가?', o: ['동기 전동기', '유도 전동기', '직류 복권 전동기', '직류 타여자 전동기'] },
+  { n: 41, s: '제3과목 전기설비', t: '다음 그림과 같은 전선의 접속법은?', o: ['직선 접속, 분기 접속', '직선 접속, 종단 접속', '종단 접속, 직선 접속', '직선 접속, 슬리브에 의한 접속'] },
+  { n: 42, s: '제3과목 전기설비', t: '4심 캡타이어케이블 심선의 색상은?', o: ['흑, 백, 적, 청', '흑, 백, 적, 황', '흑, 백, 적, 녹', '흑, 백, 적, 회'] },
+  { n: 43, s: '제3과목 전기설비', t: '금속관공사를 할 경우 절연전선이나 케이블 손상방지용으로 사용하는 부품은?', o: ['부싱', '엘보', '커플링', '로크너트'] },
+  { n: 44, s: '제3과목 전기설비', t: '합성수지관 공사에서 옥외 등 온도 차가 큰 장소에 노출 배관할 때 사용하는 커플링은?', o: ['신축커플링(0C)', '신축커플링(1C)', '신축커플링(2C)', '신축커플링(3C)'] },
+  { n: 45, s: '제3과목 전기설비', t: '폭연성 분진이 존재하는 곳의 저압 옥내배선 공사 시 공사 방법으로 짝지어진 것은?', o: ['금속관 공사, MI 케이블 공사, 개장된 케이블 공사', 'CD 케이블 공사, MI 케이블 공사, 금속관 공사', 'CD 케이블 공사, MI 케이블 공사, 제1종 캡타이어 케이블 공사', '개장된 케이블 공사, CD 케이블 공사, 제1종 캡타이어 케이블 공사'] },
+  { n: 46, s: '제3과목 전기설비', t: '목장의 전기울타리에 사용하는 경동선의 지름은 최소 몇 ㎟ 이상이어야 하는가?', o: ['1.5', '4', '6', '10'] },
+  { n: 47, s: '제3과목 전기설비', t: '전압의 구분에서 고압에 대한 설명으로 가장 옳은 것은?', o: ['직류는 1500V, 교류는 1000V 이하인 것', '직류는 1000V, 교류는 1500V 이상인 것', '직류는 1500V, 교류는 1000V를 초과하고 7kV 이하인 것', '7kV를 초과하는 것'] },
+  { n: 48, s: '제3과목 전기설비', t: '전압의 구분에서 직류를 몇 V 이하를 저압이라고 하는가?', o: ['600', '750', '1000', '1500'] },
+  { n: 49, s: '제3과목 전기설비', t: '최대사용전압이 70kV인 중성점 직접 접지식 전로의 절연내력 시험전압은 몇 V인가?', o: ['35,000V', '50,400V', '44,800V', '42,000V'] },
+  { n: 50, s: '제3과목 전기설비', t: '절연내력을 시험할 때는 관련 규정에서 정한 시험전압을 연속하여 몇 분간 가하여야 하는가?', o: ['1분', '3분', '5분', '10분'] },
+  { n: 51, s: '제3과목 전기설비', t: '접지극 공사 방법이 아닌 것은?', o: ['동판 면적은 900㎠ 이상의 것이어야 한다', '동피복강봉은 지름 6mm 이상의 것이어야 한다', '접지선과 접지극은 은납땜 기타 확실한 방법으로 접속한다', '사람이 접촉할 우려가 있으면 손상 방지용 방호장치를 시설한다'] },
+  { n: 52, s: '제3과목 전기설비', t: '피뢰설비공사에 대한 설명으로 옳지 않은 것은?', o: ['돌침부는 건축법의 풍하중에 견딜 수 있어야 한다', '피뢰도선에서 동선의 단면적은 20㎟ 이상이어야 한다', '피뢰접지극은 지표면에서 0.75m 이상의 깊이로 매설해야 한다', '뇌서지 전류를 대지로 방류시키기 위한 접지를 시설해야 한다'] },
+  { n: 53, s: '제3과목 전기설비', t: '큰 고장전류가 접지도체를 통하여 흐르지 않을 경우 접지도체의 최소 단면적은 구리인 경우 몇 ㎟ 이상인가?', o: ['2.5', '6', '10', '16'] },
+  { n: 54, s: '제3과목 전기설비', t: '선도체의 단면적이 16㎟이면, 구리 보호도체의 굵기는?', o: ['1.5㎟', '2.5㎟', '16㎟', '25㎟'] },
+  { n: 55, s: '제3과목 전기설비', t: '교통신호등 회로의 사용전압은 몇 V를 넘는 경우 전로에 지락이 생겼을 때 자동적으로 전로를 차단하는 장치를 시설해야 하는가?', o: ['100', '150', '200', '300'] },
+  { n: 56, s: '제3과목 전기설비', t: '0.2kW 초과의 단상전동기를 시설할 때 과전류 보호장치를 시설하지 않아도 되는 전원측 전로의 과전류 차단기 정격전류는 몇 A 이하인가?', o: ['8', '16', '20', '32'] },
+  { n: 57, s: '제3과목 전기설비', t: '전선의 PVC 절연물에 대한 최고허용온도는 몇 ℃인가?', o: ['70', '85', '90', '105'] },
+  { n: 58, s: '제3과목 전기설비', t: '저압 옥내전로의 인입구에 개폐기를 시설하는 경우 통상적으로 바닥에서 몇 m 높이에 설치하는가?', o: ['1.4 ~ 1.8', '1.8 ~ 2.2', '2.2 ~ 2.5', '2.5 ~ 2.7'] },
+  { n: 59, s: '제3과목 전기설비', t: '차단기 문자 기호 중 ACB는?', o: ['진공 차단기', '기중 차단기', '자기 차단기', '유입 차단기'] },
+  { n: 60, s: '제3과목 전기설비', t: '수전설비에서 저압배전반은 앞면 또는 조작·계측면의 거리가 최소 몇 m 이상이어야 하는가?', o: ['0.6', '1.2', '1.5', '1.7'] }
+];
+
+let current = 0;
+const answers = {};
+
+const subjectBadge = document.getElementById('subjectBadge');
+const courseBadge = document.getElementById('courseBadge');
+const questionNumber = document.getElementById('questionNumber');
+const questionText = document.getElementById('questionText');
+const questionFigure = document.getElementById('questionFigure');
+const optionList = document.getElementById('optionList');
+const currentIndexText = document.getElementById('currentIndexText');
+const questionMap = document.getElementById('questionMap');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const progressPercent = document.getElementById('progressPercent');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const submitModal = document.getElementById('submitModal');
+const submitModalText = document.getElementById('submitModalText');
+const continueSolveBtn = document.getElementById('continueSolveBtn');
+const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+
+function openSubmitModal() {
+  const solved = Object.keys(answers).length;
+  const unanswered = questions.length - solved;
+
+  if (unanswered > 0) {
+    submitModalText.textContent = `${unanswered}문제를 아직 풀지 않았습니다. 그래도 제출할지, 아니면 다시 풀지 선택해 주세요.`;
+  } else {
+    submitModalText.textContent = '모든 문제를 풀었습니다. 지금 제출하면 결과 페이지로 이동합니다.';
+  }
+
+  submitModal.classList.remove('hidden');
+  submitModal.classList.add('flex');
+}
+
+function closeSubmitModal() {
+  submitModal.classList.add('hidden');
+  submitModal.classList.remove('flex');
+}
+
+function renderMap() {
+  questionMap.innerHTML = '';
+  questions.forEach((q, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'qmap-btn h-10 rounded-xl border border-line bg-white text-sm font-bold text-muted transition hover:border-primary hover:text-primary';
+    btn.textContent = String(q.n).padStart(2, '0');
+    if (answers[q.n] !== undefined) btn.classList.add('answered');
+    if (idx === current) btn.classList.add('current');
+    btn.addEventListener('click', () => {
+      current = idx;
+      renderQuestion();
+    });
+    questionMap.appendChild(btn);
+  });
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  subjectBadge.textContent = q.s;
+  courseBadge.textContent = q.s;
+  questionNumber.textContent = `문제 ${String(q.n).padStart(2, '0')}`;
+  questionText.textContent = q.t;
+  if (q.f) {
+    questionFigure.innerHTML = q.f;
+    questionFigure.classList.remove('hidden');
+  } else {
+    questionFigure.innerHTML = '';
+    questionFigure.classList.add('hidden');
+  }
+  currentIndexText.textContent = q.n;
+  optionList.innerHTML = '';
+
+  q.o.forEach((option, idx) => {
+    const label = document.createElement('button');
+    label.type = 'button';
+    label.className = 'option-card flex items-start gap-4 rounded-2xl border border-line bg-white px-5 py-4 text-left transition hover:border-primary hover:-translate-y-0.5';
+    if (answers[q.n] === idx) label.classList.add('selected');
+    label.innerHTML = `
+      <div class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cream font-bold text-primary">${idx + 1}</div>
+      <div class="pt-1 text-base leading-7 text-ink">${option}</div>
+    `;
+    label.addEventListener('click', () => {
+      answers[q.n] = idx;
+      updateProgress();
+      renderQuestion();
+    });
+    optionList.appendChild(label);
+  });
+
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === questions.length - 1;
+  prevBtn.classList.toggle('opacity-40', current === 0);
+  nextBtn.classList.toggle('opacity-40', current === questions.length - 1);
+  renderMap();
+}
+
+function updateProgress() {
+  const solved = Object.keys(answers).length;
+  const percent = Math.round((solved / questions.length) * 100);
+  progressBar.style.width = `${percent}%`;
+  progressText.textContent = `${solved} / ${questions.length} 문항 선택`;
+  progressPercent.textContent = `${percent}%`;
+}
+
+prevBtn.addEventListener('click', () => {
+  if (current > 0) {
+    current -= 1;
+    renderQuestion();
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (current < questions.length - 1) {
+    current += 1;
+    renderQuestion();
+  }
+});
+
+submitBtn.addEventListener('click', openSubmitModal);
+continueSolveBtn.addEventListener('click', closeSubmitModal);
+confirmSubmitBtn.addEventListener('click', () => {
+  localStorage.setItem('electricExam2021Round1Answers', JSON.stringify(answers));
+  localStorage.setItem('electricExam2021Round1SubmittedAt', new Date().toISOString());
+  window.location.href = '../result/code.html';
+});
+submitModal.addEventListener('click', (event) => {
+  if (event.target === submitModal) {
+    closeSubmitModal();
+  }
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !submitModal.classList.contains('hidden')) {
+    closeSubmitModal();
+  }
+});
+
+updateProgress();
+renderQuestion();
+</script>
+</body>
+</html>
