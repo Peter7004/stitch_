@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
+<base href="/stitch_/">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>전기기능사 | 2021년 1회 필기</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
@@ -208,7 +209,7 @@ const questions = [
   { n: 23, s: '제2과목 전기기기', t: '균압선을 설치하여 병렬 운전하는 발전기는?', o: ['타여자 발전기', '분권 발전기', '복권 발전기', '동기기'] },
   { n: 24, s: '제2과목 전기기기', t: '직류 직권전동기의 회전수 N과 토크 τ의 관계는?', o: ['τ ∝ 1/N', 'τ ∝ 1/N²', 'τ ∝ N', 'τ ∝ N²'] },
   { n: 25, s: '제2과목 전기기기', t: '직류전동기의 전부하 속도가 1200rpm이고 속도변동률이 2%일 때 무부하 속도는 몇 rpm인가?', o: ['1224', '1236', '1176', '1164'] },
-  { n: 26, s: '제2과목 전기기기', t: '다음 그림과 같은 분권발전기에서 계자전류가 6A, 전기자전류가 100A라면 부하전류는 몇 A인가?', o: ['1.96', '100', '94', '106'], f: `<svg viewBox="0 0 760 480" class="w-full h-auto rounded-[18px] bg-white" xmlns="http://www.w3.org/2000/svg" aria-label="분권발전기 회로도"><rect width="760" height="480" fill="white"/><path d="M44 22 H640" stroke="#111827" stroke-width="2"/><path d="M44 22 V462 H640" stroke="#111827" stroke-width="2"/><circle cx="285" cy="22" r="15" fill="#111827"/><circle cx="285" cy="462" r="15" fill="#111827"/><path d="M285 37 V70 L255 85 L315 110 L255 135 L315 160 L255 185 L285 200 V295" stroke="#111827" stroke-width="2" fill="none"/><circle cx="285" cy="350" r="58" fill="white" stroke="#111827" stroke-width="2"/><text x="285" y="370" text-anchor="middle" font-size="54" font-family="Arial, sans-serif" fill="#111827">A</text><path d="M285 408 V447" stroke="#111827" stroke-width="2"/><path d="M44 175 C12 175 12 218 44 218 C76 218 76 261 44 261 C12 261 12 304 44 304" stroke="#111827" stroke-width="2" fill="none"/><text x="84" y="258" font-size="54" font-family="Arial, sans-serif" fill="#111827">계자</text><text x="340" y="268" font-size="58" font-family="Arial, sans-serif" fill="#111827">전기자</text><text x="624" y="238" font-size="58" font-family="Arial, sans-serif" fill="#111827">부하</text></svg>` },
+  { n: 26, s: '제2과목 전기기기', t: '다음 그림과 같은 분권발전기에서 계자전류가 6A, 전기자전류가 100A라면 부하전류는 몇 A인가?', img: './pictures/21a26.png', o: ['1.96', '100', '94', '106'] },
   { n: 27, s: '제2과목 전기기기', t: '워드레오나드 방식으로 속도를 제어하는 데 사용되는 전동기는?', o: ['타여자', '직권', '분권', '복권'] },
   { n: 28, s: '제2과목 전기기기', t: '1차 권수가 3300이고 2차 권수가 330인 변압기의 권수비(turn ratio)는?', o: ['0.1', '0.5', '10', '50'] },
   { n: 29, s: '제2과목 전기기기', t: '변압기 성층 철심 강판 재료의 규소 함유량은 대략 몇 %인가?', o: ['8', '6', '4', '2'] },
@@ -218,12 +219,12 @@ const questions = [
   { n: 33, s: '제2과목 전기기기', t: '용량이 250kVA인 변압기 3대를 Δ결선 운전 중 1대가 고장나 V결선으로 운전하는 경우 출력은?', o: ['250', '433', '450', '500'] },
   { n: 34, s: '제2과목 전기기기', t: '8극 60Hz 3상 유도전동기의 동기속도는 몇 rpm인가?', o: ['900', '1200', '1500', '1800'] },
   { n: 35, s: '제2과목 전기기기', t: '일정 주파수 전원에서 운전하는 3상 유도전동기의 전원 전압이 90%가 되었다면 토크는 약 몇 %가 되는가?', o: ['10', '64', '81', '90'] },
-  { n: 36, s: '제2과목 전기기기', t: '유도전동기의 출력특성곡선에서 슬립을 나타내는 곡선 번호는?', o: ['1', '2', '3', '4'] },
+  { n: 36, s: '제2과목 전기기기', t: '유도전동기의 출력특성곡선에서 슬립을 나타내는 곡선 번호는?', img: './pictures/21a36.png', o: ['1', '2', '3', '4'] },
   { n: 37, s: '제2과목 전기기기', t: '동기 와트 P2, 출력 P0, 슬립 s, 동기속도 Ns, 회전속도 N, 2차 동손 P2c일 때 2차 효율 표기로 틀린 것은?', o: ['1 - s', 'P2c / P2', 'P0 / P2', 'N / Ns'] },
   { n: 38, s: '제2과목 전기기기', t: '슬립 4%인 유도전동기의 등가 부하저항은 2차 저항의 몇 배인가?', o: ['5', '19', '20', '24'] },
   { n: 39, s: '제2과목 전기기기', t: '저항만의 부하에서 사이리스터를 이용한 전파정류 회로의 출력식으로 옳은 것은?', o: ['Ed = 0.9E(1 + cosα)', 'Ed = 0.45E(1 + cosα)', 'Ed = 0.9Ecosα', 'Ed = 0.45Ecosα'] },
   { n: 40, s: '제2과목 전기기기', t: 'VVVF(Variable Voltage Variable Frequency)는 어떤 전동기의 속도 제어에 사용되는가?', o: ['동기 전동기', '유도 전동기', '직류 복권 전동기', '직류 타여자 전동기'] },
-  { n: 41, s: '제3과목 전기설비', t: '다음 그림과 같은 전선의 접속법은?', o: ['직선 접속, 분기 접속', '직선 접속, 종단 접속', '종단 접속, 직선 접속', '직선 접속, 슬리브에 의한 접속'] },
+  { n: 41, s: '제3과목 전기설비', t: '다음 그림과 같은 전선의 접속법은?', img: './pictures/21a41.png', o: ['직선 접속, 분기 접속', '직선 접속, 종단 접속', '종단 접속, 직선 접속', '직선 접속, 슬리브에 의한 접속'] },
   { n: 42, s: '제3과목 전기설비', t: '4심 캡타이어케이블 심선의 색상은?', o: ['흑, 백, 적, 청', '흑, 백, 적, 황', '흑, 백, 적, 녹', '흑, 백, 적, 회'] },
   { n: 43, s: '제3과목 전기설비', t: '금속관공사를 할 경우 절연전선이나 케이블 손상방지용으로 사용하는 부품은?', o: ['부싱', '엘보', '커플링', '로크너트'] },
   { n: 44, s: '제3과목 전기설비', t: '합성수지관 공사에서 옥외 등 온도 차가 큰 장소에 노출 배관할 때 사용하는 커플링은?', o: ['신축커플링(0C)', '신축커플링(1C)', '신축커플링(2C)', '신축커플링(3C)'] },
@@ -308,8 +309,15 @@ function renderQuestion() {
   courseBadge.textContent = q.s;
   questionNumber.textContent = `문제 ${String(q.n).padStart(2, '0')}`;
   questionText.textContent = q.t;
+  const figureParts = [];
   if (q.f) {
-    questionFigure.innerHTML = q.f;
+    figureParts.push(q.f);
+  }
+  if (q.img) {
+    figureParts.push(`<img src="${q.img}" alt="${q.n}번 문제 이미지" class="w-full h-auto rounded-[18px] bg-white object-contain" />`);
+  }
+  if (figureParts.length > 0) {
+    questionFigure.innerHTML = figureParts.join('');
     questionFigure.classList.remove('hidden');
   } else {
     questionFigure.innerHTML = '';
