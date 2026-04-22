@@ -377,7 +377,7 @@ continueSolveBtn.addEventListener('click', closeSubmitModal);
 confirmSubmitBtn.addEventListener('click', () => {
   localStorage.setItem('electricExam2021Round3Answers', JSON.stringify(answers));
   localStorage.setItem('electricExam2021Round3SubmittedAt', new Date().toISOString());
-  window.location.href = './result/r21c.html';
+  window.location.href = new URL('./result/r21c.html', document.baseURI).href;
 });
 submitModal.addEventListener('click', (event) => {
   if (event.target === submitModal) {
