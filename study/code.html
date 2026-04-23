@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html class="light" lang="ko"><head>
 <meta charset="utf-8"/>
@@ -136,22 +136,22 @@
 <a href="./quiz/code.html" class="w-full py-3 px-4 bg-primary text-on-primary rounded-lg font-bold text-sm mb-4 shadow-sm hover:opacity-90 transition-opacity block text-center">
                     시험 응시하기
                 </a>
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200/50 transition-all" href="#">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200/50 transition-all" href="./settings/code.html">
 <span class="material-symbols-outlined">settings</span>
 <span class="text-sm">설정</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-2 text-slate-600 hover:bg-slate-200/50 transition-all" href="#">
+<button type="button" id="support-btn" class="flex w-full items-center gap-3 px-4 py-2 text-left text-slate-600 hover:bg-slate-200/50 transition-all">
 <span class="material-symbols-outlined">help</span>
 <span class="text-sm">고객지원</span>
-</a>
+</button>
 </div>
 </div>
 </aside>
 <!-- Main Content Area -->
-<main class="pt-24 pl-0 md:pl-64 min-h-screen">
-<div class="max-w-[1200px] mx-auto px-8 py-8">
+<main class="pt-24 pl-0 md:pl-64 min-h-screen lg:pr-[390px] xl:pr-[440px]">
+<div class="max-w-[1260px] ml-0 mr-auto px-6 py-8">
 <!-- Context Header Section - 전기이론 -->
-<header id="theory-header" class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 show-section">
+<header id="theory-header" class="flex flex-col gap-6 mb-12 show-section">
 <div>
 <div class="flex items-center gap-2 mb-2">
 <span class="text-secondary font-bold text-xs uppercase tracking-widest">핵심 모듈</span>
@@ -160,7 +160,7 @@
 <h1 class="text-5xl font-black text-primary tracking-tighter leading-tight">전기이론</h1>
 <p class="text-on-surface-variant mt-2 text-lg">전기이론: 회로 해석 및 법칙</p>
 </div>
-<div class="relative group w-full md:w-96">
+<div class="relative group w-full max-w-xl mx-auto">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
 <input id="search-theory" class="w-full pl-12 pr-4 py-4 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all text-sm search-input" placeholder="공식이나 개념 검색..." type="text"/>
 <div id="search-results-theory" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto hidden"></div>
@@ -168,7 +168,7 @@
 </header>
 
 <!-- Context Header Section - 전기기기 -->
-<header id="machines-header" class="hidden flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 show-section">
+<header id="machines-header" class="hidden flex flex-col gap-6 mb-12 show-section">
 <div>
 <div class="flex items-center gap-2 mb-2">
 <span class="text-secondary font-bold text-xs uppercase tracking-widest">핵심 모듈</span>
@@ -177,14 +177,14 @@
 <h1 class="text-5xl font-black text-primary tracking-tighter leading-tight">전기기기</h1>
 <p class="text-on-surface-variant mt-2 text-lg">전기기기: 발전기, 전동기, 변압기</p>
 </div>
-<div class="relative group w-full md:w-96">
+<div class="relative group w-full max-w-xl mx-auto">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
 <input id="search-machines" class="w-full pl-12 pr-4 py-4 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all text-sm search-input" placeholder="공식이나 개념 검색..." type="text"/>
 <div id="search-results-machines" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto hidden"></div>
 </div>
 </header>
 <!-- Context Header Section - 전기설비 -->
-<header id="facilities-header" class="hidden flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 show-section">
+<header id="facilities-header" class="hidden flex flex-col gap-6 mb-12 show-section">
 <div>
 <div class="flex items-center gap-2 mb-2">
 <span class="text-secondary font-bold text-xs uppercase tracking-widest">핵심 모듈</span>
@@ -193,7 +193,7 @@
 <h1 class="text-5xl font-black text-primary tracking-tighter leading-tight">전기설비</h1>
 <p class="text-on-surface-variant mt-2 text-lg">전기설비: 배선, 배전, 보안, 응용시설</p>
 </div>
-<div class="relative group w-full md:w-96">
+<div class="relative group w-full max-w-xl mx-auto">
 <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
 <input id="search-facilities" class="w-full pl-12 pr-4 py-4 bg-surface-container-highest border-none rounded-xl focus:ring-2 focus:ring-primary/20 transition-all text-sm search-input" placeholder="공식이나 개념 검색..." type="text"/>
 <div id="search-results-facilities" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto hidden"></div>
@@ -201,9 +201,9 @@
 </header>
 
 <!-- Editorial Layout: Asymmetric Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)] gap-10">
 <!-- Table of Contents (Left Column) -->
-<nav class="lg:col-span-3 space-y-8">
+<nav class="space-y-8">
 <!-- 전기이론 챕터 목록 -->
 <div id="theory-chapters" class="show-section">
 <h3 class="font-headline text-xs font-bold text-primary tracking-widest uppercase mb-4">챕터 목록</h3>
@@ -359,7 +359,7 @@
 </div>
 </nav>
 <!-- Detailed Content (Right Column) -->
-<div class="lg:col-span-9 space-y-12">
+<div class="space-y-12">
 <!-- 전기이론 섹션 -->
 <div id="theory-content" class="show-section space-y-12">
 <!-- Chapter 1: 직류회로 (Visible by default) -->
@@ -3565,10 +3565,332 @@ window.addEventListener('load', function() {
 });
 </script>
 </main>
-<!-- Floating Action for Mobile / Quick Note -->
-<div class="fixed bottom-8 right-8 z-50">
-<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all group">
-<span class="material-symbols-outlined text-3xl group-hover:rotate-12 transition-transform">edit_note</span>
+<aside class="fixed right-4 top-24 z-40 hidden lg:block w-[350px] xl:w-[400px]">
+<section class="overflow-hidden rounded-3xl border border-surface-variant/50 bg-white shadow-xl">
+<div class="border-b border-surface-container px-5 py-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<p class="text-xs font-bold uppercase tracking-[0.24em] text-secondary">AI Study Mate</p>
+<h3 class="mt-1 text-xl font-extrabold text-primary">옆에서 바로 묻는 AI 튜터</h3>
+<p class="mt-2 text-sm text-on-surface-variant leading-relaxed">지금 보고 있는 단원 기준으로 개념 설명과 풀이를 바로 물어볼 수 있습니다.</p>
+</div>
+<button class="shrink-0 rounded-xl bg-surface-container-high px-3 py-2 text-xs font-semibold text-on-surface transition hover:bg-surface-container-highest" id="study-chat-context-btn" type="button">현재 단원 질문</button>
+</div>
+</div>
+<div class="flex h-[calc(100vh-220px)] min-h-[420px] flex-col">
+<div class="flex-1 space-y-4 overflow-y-auto px-4 py-4" id="study-chat-messages">
+<div class="rounded-2xl bg-surface-container-low px-4 py-5 text-sm text-on-surface-variant">
+<p class="font-semibold text-on-surface">AI 튜터가 준비되어 있습니다.</p>
+<p class="mt-2 leading-relaxed">공식 설명, 개념 정리, 계산 풀이, 암기 팁까지 바로 질문해 보세요.</p>
+</div>
+</div>
+<div class="border-t border-surface-container px-4 py-4">
+<div class="rounded-2xl border border-surface-variant/50 bg-surface-container-lowest p-3 shadow-sm">
+<textarea class="min-h-[72px] max-h-40 w-full resize-none border-none bg-transparent px-0 py-1 text-sm text-on-surface focus:ring-0" id="study-chat-input" placeholder="지금 헷갈리는 내용을 적어보세요..."></textarea>
+<div class="mt-3 flex items-center justify-between gap-3">
+<p class="text-[11px] text-on-surface-variant" id="study-chat-limit-status">남은 질문 횟수를 확인하는 중입니다.</p>
+<button class="flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50" id="study-send-btn" type="button">
+<span class="material-symbols-outlined text-sm">send</span>
+<span>전송</span>
 </button>
 </div>
+</div>
+</div>
+</div>
+</section>
+</aside>
+<script>
+const STUDY_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const STUDY_MODEL = 'openai/gpt-4o-mini';
+const STUDY_CHAT_LIMIT_KEY = 'ai_chat_usage_limit';
+const STUDY_CHAT_HISTORY_KEY = 'ai_chat_history';
+const STUDY_CHAT_LIMIT_COUNT = 5;
+const STUDY_CHAT_COOLDOWN_MS = 10 * 60 * 1000;
+const STUDY_REQUEST_TIMEOUT_MS = 25000;
+
+const studyChatMessages = document.getElementById('study-chat-messages');
+const studyChatInput = document.getElementById('study-chat-input');
+const studySendBtn = document.getElementById('study-send-btn');
+const studyChatLimitStatus = document.getElementById('study-chat-limit-status');
+const studyChatContextBtn = document.getElementById('study-chat-context-btn');
+
+let studyConversationHistory = [];
+let studyCooldownTimerId = null;
+
+function getStudyApiKey() {
+  return localStorage.getItem('API_KEY_OPENROUTER') || '';
+}
+
+function getActiveStudySectionTitle() {
+  const activeSectionBtn = document.querySelector('.section-btn.bg-teal-50');
+  return activeSectionBtn ? activeSectionBtn.textContent.replace(/\s+/g, ' ').trim() : '';
+}
+
+function getActiveStudyChapterTitle() {
+  const activeChapterBtn = document.querySelector('.chapter-btn:not(.opacity-50)');
+  if (!activeChapterBtn) return '';
+  const spans = activeChapterBtn.querySelectorAll('span');
+  const label = spans.length > 1 ? spans[1].textContent : activeChapterBtn.textContent;
+  return label.replace(/\s+/g, ' ').trim();
+}
+
+function buildStudyContextPrompt() {
+  const context = [getActiveStudySectionTitle(), getActiveStudyChapterTitle()].filter(Boolean).join(' - ');
+  return context
+    ? `지금 학습 중인 주제는 ${context}입니다. 이 내용을 초보자도 이해하기 쉽게 설명해줘.`
+    : '지금 보고 있는 학습 내용을 바탕으로 쉽게 설명해줘.';
+}
+
+function getStudyChatLimitState() {
+  const saved = JSON.parse(localStorage.getItem(STUDY_CHAT_LIMIT_KEY) || '{}');
+  return {
+    count: Number(saved.count) || 0,
+    cooldownUntil: Number(saved.cooldownUntil) || 0
+  };
+}
+
+function setStudyChatLimitState(state) {
+  localStorage.setItem(STUDY_CHAT_LIMIT_KEY, JSON.stringify(state));
+}
+
+function normalizeStudyChatLimitState() {
+  const state = getStudyChatLimitState();
+  if (state.cooldownUntil && Date.now() >= state.cooldownUntil) {
+    const resetState = { count: 0, cooldownUntil: 0 };
+    setStudyChatLimitState(resetState);
+    return resetState;
+  }
+  return state;
+}
+
+function formatStudyRemainingTime(ms) {
+  const totalSeconds = Math.max(0, Math.ceil(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+function updateStudyChatLimitUI() {
+  if (!studyChatInput || !studySendBtn || !studyChatLimitStatus) return;
+
+  const state = normalizeStudyChatLimitState();
+  const now = Date.now();
+  const isCoolingDown = state.cooldownUntil > now;
+  const remainingQuestions = Math.max(0, STUDY_CHAT_LIMIT_COUNT - state.count);
+
+  if (studyCooldownTimerId) {
+    clearTimeout(studyCooldownTimerId);
+    studyCooldownTimerId = null;
+  }
+
+  if (isCoolingDown) {
+    const remainingMs = state.cooldownUntil - now;
+    studyChatInput.disabled = true;
+    studySendBtn.disabled = true;
+    studyChatInput.placeholder = '잠시 후 다시 질문할 수 있습니다.';
+    studyChatLimitStatus.textContent = `질문 5회를 모두 사용했습니다. 남은 시간 ${formatStudyRemainingTime(remainingMs)}`;
+    studyCooldownTimerId = setTimeout(updateStudyChatLimitUI, 1000);
+    return;
+  }
+
+  studyChatInput.disabled = false;
+  studySendBtn.disabled = false;
+  studyChatInput.placeholder = '지금 헷갈리는 내용을 적어보세요...';
+  studyChatLimitStatus.textContent = `남은 질문 횟수 ${remainingQuestions}회 / ${STUDY_CHAT_LIMIT_COUNT}회`;
+}
+
+function clearStudyWelcome() {
+  if (!studyChatMessages) return;
+  const welcome = studyChatMessages.querySelector('.rounded-2xl.bg-surface-container-low');
+  if (welcome) {
+    welcome.remove();
+  }
+}
+
+function saveStudyConversationHistory() {
+  localStorage.setItem(STUDY_CHAT_HISTORY_KEY, JSON.stringify(studyConversationHistory));
+}
+
+function loadStudyConversationHistory() {
+  if (!studyChatMessages) return;
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STUDY_CHAT_HISTORY_KEY) || '[]');
+    if (!Array.isArray(saved)) return;
+    studyConversationHistory = saved.filter((item) =>
+      item &&
+      (item.role === 'user' || item.role === 'assistant') &&
+      typeof item.content === 'string' &&
+      item.content.trim()
+    );
+
+    if (studyConversationHistory.length > 0) {
+      clearStudyWelcome();
+      studyConversationHistory.forEach((item) => addStudyMessage(item.content, item.role === 'user'));
+    }
+  } catch (error) {
+    console.warn('?? ??? ?? ??? ???? ?????.', error);
+    studyConversationHistory = [];
+  }
+}
+
+function addStudyMessage(text, isUser = false) {
+  if (!studyChatMessages) return;
+  clearStudyWelcome();
+
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'}`;
+
+  const bubble = document.createElement('div');
+  bubble.className = `${isUser ? 'bg-primary text-white' : 'bg-surface-container text-on-surface'} max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${isUser ? 'rounded-br-md' : 'rounded-bl-md'}`;
+
+  let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  formatted = formatted.replace(/\n/g, '<br/>');
+  bubble.innerHTML = formatted;
+
+  messageDiv.appendChild(bubble);
+  studyChatMessages.appendChild(messageDiv);
+  studyChatMessages.scrollTop = studyChatMessages.scrollHeight;
+}
+
+function showStudyLoading() {
+  if (!studyChatMessages) return;
+  const loadingDiv = document.createElement('div');
+  loadingDiv.id = 'study-loading-indicator';
+  loadingDiv.className = 'flex items-center gap-2 text-sm text-on-surface-variant';
+  loadingDiv.innerHTML = '<span class="material-symbols-outlined animate-spin text-base">hourglass_empty</span>답변을 생성하는 중입니다...';
+  studyChatMessages.appendChild(loadingDiv);
+  studyChatMessages.scrollTop = studyChatMessages.scrollHeight;
+}
+
+function removeStudyLoading() {
+  const loading = document.getElementById('study-loading-indicator');
+  if (loading) loading.remove();
+}
+
+async function sendStudyMessage(prefilledMessage = '') {
+  if (!studyChatInput || !studySendBtn) return;
+
+  const message = (prefilledMessage || studyChatInput.value).trim();
+  if (!message) return;
+
+  const apiKey = getStudyApiKey();
+  if (!apiKey) {
+    addStudyMessage('OpenRouter API 키가 설정되지 않았습니다.\n먼저 설정 페이지에서 API 키를 저장해 주세요.', false);
+    return;
+  }
+
+  const limitState = normalizeStudyChatLimitState();
+  if (limitState.cooldownUntil > Date.now()) {
+    updateStudyChatLimitUI();
+    return;
+  }
+
+  addStudyMessage(message, true);
+  studyConversationHistory.push({ role: 'user', content: message });
+  saveStudyConversationHistory();
+
+  const nextCount = limitState.count + 1;
+  setStudyChatLimitState({
+    count: nextCount,
+    cooldownUntil: nextCount >= STUDY_CHAT_LIMIT_COUNT ? Date.now() + STUDY_CHAT_COOLDOWN_MS : 0
+  });
+
+  studyChatInput.value = '';
+  studySendBtn.disabled = true;
+  showStudyLoading();
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), STUDY_REQUEST_TIMEOUT_MS);
+
+    const response = await fetch(STUDY_API_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: STUDY_MODEL,
+        messages: [
+          {
+            role: 'system',
+            content: '당신은 전기기능사 시험을 준비하는 학생을 돕는 AI 튜터입니다. 전기이론, 전기기기, 전기설비를 쉽게 설명해 주세요. 계산 문제는 풀이 과정을 단계적으로 보여주고, 최대한 명확한 한국어로 답변해 주세요.'
+          },
+          ...studyConversationHistory
+        ],
+        temperature: 0.7,
+        max_tokens: 1024
+      })
+    });
+
+    clearTimeout(timeoutId);
+
+    removeStudyLoading();
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMsg = errorData.error?.message || `API 오류: ${response.status}`;
+      addStudyMessage(`API 오류가 발생했습니다.\n${errorMsg}`, false);
+      return;
+    }
+
+    const data = await response.json();
+    const aiResponse = data.choices?.[0]?.message?.content;
+    if (!aiResponse) {
+      addStudyMessage('API 응답 형식이 올바르지 않습니다.', false);
+      return;
+    }
+
+    addStudyMessage(aiResponse, false);
+    studyConversationHistory.push({ role: 'assistant', content: aiResponse });
+    saveStudyConversationHistory();
+  } catch (error) {
+    removeStudyLoading();
+    const errorMessage = error.name === 'AbortError'
+      ? '요청 시간이 초과되었습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.'
+      : `네트워크 오류가 발생했습니다.\n${error.message}`;
+    addStudyMessage(errorMessage, false);
+  } finally {
+    updateStudyChatLimitUI();
+    if (!studyChatInput.disabled) {
+      studyChatInput.focus();
+    }
+  }
+}
+
+studySendBtn?.addEventListener('click', () => sendStudyMessage());
+studyChatInput?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendStudyMessage();
+  }
+});
+
+studyChatContextBtn?.addEventListener('click', () => {
+  studyChatInput.value = buildStudyContextPrompt();
+  studyChatInput.focus();
+});
+
+const supportBtn = document.getElementById('support-btn');
+if (supportBtn) {
+  supportBtn.addEventListener('click', () => {
+    window.alert('고객지원 페이지는 현재 준비 중입니다.');
+  });
+}
+
+window.addEventListener('storage', (event) => {
+  if (event.key === STUDY_CHAT_HISTORY_KEY) {
+    studyChatMessages.innerHTML = '<div class="rounded-2xl bg-surface-container-low px-4 py-5 text-sm text-on-surface-variant"><p class="font-semibold text-on-surface">AI 튜터가 준비되어 있습니다.</p><p class="mt-2 leading-relaxed">공식 설명, 개념 정리, 계산 풀이, 암기 팁까지 바로 질문해 보세요.</p></div>';
+    loadStudyConversationHistory();
+  }
+  if (event.key === STUDY_CHAT_LIMIT_KEY) {
+    updateStudyChatLimitUI();
+  }
+});
+
+loadStudyConversationHistory();
+updateStudyChatLimitUI();
+</script>
 </body></html>

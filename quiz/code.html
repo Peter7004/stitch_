@@ -5,6 +5,11 @@
 <base href="../">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>ElecMaster | 기출문제</title>
+<script>
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        localStorage.removeItem('THEME_PREFERENCE');
+    </script>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -88,6 +93,123 @@
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(20px);
         }
+        html.dark body {
+            background: radial-gradient(circle at top left, #0f172a, #111827 46%, #0b1220 100%);
+            color: #e5edf7;
+        }
+        html.dark header {
+            background: rgba(15, 23, 42, 0.84) !important;
+            border-color: rgba(148, 163, 184, 0.16);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+        }
+        html.dark main {
+            background: transparent;
+        }
+        html.dark .bg-white,
+        html.dark .bg-surface-container-lowest,
+        html.dark .glass-panel {
+            background: rgba(15, 23, 42, 0.88) !important;
+            color: #e5edf7;
+            border-color: rgba(148, 163, 184, 0.18) !important;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28) !important;
+        }
+        html.dark .bg-surface,
+        html.dark .bg-slate-50,
+        html.dark .bg-cream {
+            background: transparent !important;
+        }
+        html.dark .bg-primary {
+            background: linear-gradient(180deg, rgba(30, 64, 175, 0.45), rgba(15, 23, 42, 0.94)) !important;
+            color: #e5edf7 !important;
+        }
+        html.dark .bg-accent,
+        html.dark .bg-secondary\/10 {
+            background: rgba(13, 148, 136, 0.18) !important;
+        }
+        html.dark .bg-slate-100,
+        html.dark .hover\:bg-cream:hover {
+            background: rgba(30, 41, 59, 0.72) !important;
+        }
+        html.dark .text-primary,
+        html.dark .text-ink,
+        html.dark .text-slate-900,
+        html.dark .text-on-surface {
+            color: #dbeafe !important;
+        }
+        html.dark .text-muted,
+        html.dark .text-slate-500,
+        html.dark .text-slate-400,
+        html.dark .text-on-surface-variant {
+            color: #94a3b8 !important;
+        }
+        html.dark .text-secondary {
+            color: #5eead4 !important;
+        }
+        html.dark .border-line,
+        html.dark .border-secondary\/30,
+        html.dark .bg-line,
+        html.dark .bg-slate-200\/50 {
+            border-color: rgba(148, 163, 184, 0.18) !important;
+            background-color: rgba(148, 163, 184, 0.18) !important;
+        }
+        html.dark .text-white\/70,
+        html.dark .text-white\/85 {
+            color: #cbd5e1 !important;
+        }
+        html.dark .bg-surface-container,
+        html.dark .bg-surface-container-low,
+        html.dark .bg-surface-container-high,
+        html.dark .bg-surface-container-highest,
+        html.dark .bg-surface-container-lowest {
+            background: rgba(30, 41, 59, 0.72) !important;
+            color: #e5edf7 !important;
+            border-color: rgba(148, 163, 184, 0.18) !important;
+        }
+        html.dark .text-white {
+            color: #f8fafc !important;
+        }
+        html.dark ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.28) !important;
+        }
+        html.dark [class*="bg-white"],
+        html.dark [class*="bg-cream"],
+        html.dark [class*="bg-slate-50"],
+        html.dark [class*="bg-slate-100"],
+        html.dark [class*="bg-slate-200"],
+        html.dark [class*="bg-surface-container"] {
+            background-color: rgba(15, 23, 42, 0.88) !important;
+            color: #e5edf7 !important;
+            border-color: rgba(148, 163, 184, 0.18) !important;
+        }
+        html.dark [class*="text-slate-9"],
+        html.dark [class*="text-slate-8"],
+        html.dark [class*="text-slate-7"],
+        html.dark [class*="text-primary"],
+        html.dark [class*="text-on-surface"],
+        html.dark [class*="text-ink"] {
+            color: #dbeafe !important;
+        }
+        html.dark [class*="text-slate-6"],
+        html.dark [class*="text-slate-5"],
+        html.dark [class*="text-slate-4"],
+        html.dark [class*="text-muted"],
+        html.dark [class*="text-on-surface-variant"] {
+            color: #94a3b8 !important;
+        }
+        html.dark [class*="border-slate-"],
+        html.dark [class*="border-line"],
+        html.dark [class*="border-secondary/30"] {
+            border-color: rgba(148, 163, 184, 0.18) !important;
+        }
+        html.dark .bg-primary,
+        html.dark [class~="bg-primary"] {
+            background: linear-gradient(180deg, rgba(30, 64, 175, 0.5), rgba(15, 23, 42, 0.96)) !important;
+            color: #f8fafc !important;
+        }
+        html.dark .bg-accent,
+        html.dark [class*="bg-secondary/10"] {
+            background: rgba(13, 148, 136, 0.18) !important;
+        }
     </style>
 </head>
 <body class="bg-surface text-on-surface antialiased">
@@ -117,7 +239,7 @@
       <div>
         <span class="inline-flex rounded-full bg-accent px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-secondary">CBT Practice Archive</span>
         <h1 class="mt-5 text-4xl font-headline font-extrabold tracking-tight text-primary md:text-5xl">전기기능사 연도별 기출문제</h1>
-        <p class="mt-4 max-w-2xl text-base leading-8 text-muted">2021년도부터 2022년도까지 회차별 기출문제를 정리해 두었습니다. </p>
+        <p class="mt-4 max-w-2xl text-base leading-8 text-muted">2021년도부터 2022년도까지 회차별 기출문제를 정리해 두었습니다.</p>
         <div class="mt-6 flex flex-wrap gap-3">
           <span class="rounded-full bg-cream px-4 py-2 text-sm font-semibold text-primary">60문항 기준</span>
           <span class="rounded-full bg-cream px-4 py-2 text-sm font-semibold text-primary">객관식 4지선다</span>
@@ -126,8 +248,8 @@
       </div>
       <div class="rounded-[28px] bg-primary p-7 text-white shadow-soft">
         <p class="text-xs font-bold uppercase tracking-[0.25em] text-white/70">현재 사용 가능</p>
-        <h2 class="mt-4 text-3xl font-headline font-extrabold">2021년 ~ 2025년 일부 회차</h2>
-        <p class="mt-3 text-sm leading-7 text-white/85">2021a~d, 2022a~b, 2023a, 2024a, 2025a, 2025d 파일이 실제 문제 화면으로 연결되어 있습니다.</p>
+        <h2 class="mt-4 text-3xl font-headline font-extrabold">2021년 ~ 2022년 기출문제</h2>
+        <p class="mt-3 text-sm leading-7 text-white/85">2021a~d, 2022a~b 파일이 실제 문제 화면으로 연결되어 있습니다.</p>
         <a class="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-primary transition hover:bg-cream" href="./quizui/2021a.html">
           첫 문제부터 보기
           <span class="material-symbols-outlined text-sm">arrow_forward</span>
@@ -149,177 +271,6 @@
     </div>
 
     <div class="space-y-8">
-      <section class="space-y-4">
-        <div class="flex items-center gap-4">
-          <span class="text-xl font-headline font-extrabold text-primary">2025</span>
-          <div class="h-px flex-1 bg-line"></div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <a class="group rounded-[26px] border border-secondary/30 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-secondary hover:shadow-xl" href="./quizui/2025a.html">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold text-secondary">2025년 1회</span>
-              <span class="material-symbols-outlined text-secondary transition group-hover:translate-x-1">arrow_forward</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2025년도 1회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">문제 풀이 화면까지 연결되어 있습니다. 현재 채점 기능은 준비 중입니다.</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-sm">check_circle</span>이동 가능</span>
-            </div>
-          </a>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2025년 2회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2025년도 2회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2025년 3회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2025년도 3회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-          <a class="group rounded-[26px] border border-secondary/30 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-secondary hover:shadow-xl" href="./quizui/2025d.html">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold text-secondary">2025년 4회</span>
-              <span class="material-symbols-outlined text-secondary transition group-hover:translate-x-1">arrow_forward</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2025년도 4회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">문제 풀이 화면까지 연결되어 있습니다. 현재 채점 기능은 준비 중입니다.</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-sm">check_circle</span>이동 가능</span>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      <section class="space-y-4">
-        <div class="flex items-center gap-4">
-          <span class="text-xl font-headline font-extrabold text-primary">2024</span>
-          <div class="h-px flex-1 bg-line"></div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <a class="group rounded-[26px] border border-secondary/30 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-secondary hover:shadow-xl" href="./quizui/2024a.html">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold text-secondary">2024년 1회</span>
-              <span class="material-symbols-outlined text-secondary transition group-hover:translate-x-1">arrow_forward</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2024년도 1회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">문제 풀이 화면까지 연결되어 있습니다. 현재 채점 기능은 준비 중입니다.</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-sm">check_circle</span>이동 가능</span>
-            </div>
-          </a>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2024년 2회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2024년도 2회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2024년 3회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2024년도 3회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2024년 4회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2024년도 4회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="space-y-4">
-        <div class="flex items-center gap-4">
-          <span class="text-xl font-headline font-extrabold text-primary">2023</span>
-          <div class="h-px flex-1 bg-line"></div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <a class="group rounded-[26px] border border-secondary/30 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-secondary hover:shadow-xl" href="./quizui/2023a.html">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-secondary/10 px-3 py-1 text-xs font-bold text-secondary">2023년 1회</span>
-              <span class="material-symbols-outlined text-secondary transition group-hover:translate-x-1">arrow_forward</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2023년도 1회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">문제 풀이 화면까지 연결되어 있습니다. 현재 채점 기능은 준비 중입니다.</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-sm">check_circle</span>이동 가능</span>
-            </div>
-          </a>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2023년 2회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2023년도 2회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2023년 3회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2023년도 3회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-          <article class="rounded-[26px] border border-line bg-white p-6 shadow-soft">
-            <div class="flex items-start justify-between gap-4">
-              <span class="rounded-full bg-cream px-3 py-1 text-xs font-bold text-muted">2023년 4회</span>
-              <span class="material-symbols-outlined text-slate-300">schedule</span>
-            </div>
-            <h4 class="mt-5 text-xl font-headline font-extrabold text-ink">2023년도 4회 전기기능사</h4>
-            <p class="mt-3 text-sm leading-7 text-muted">추후 업로드 예정</p>
-            <div class="mt-5 flex items-center gap-4 text-xs font-semibold text-muted">
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">quiz</span>60문항</span>
-              <span class="inline-flex items-center gap-1"><span class="material-symbols-outlined text-sm">construction</span>준비중</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
       <section class="space-y-4">
         <div class="flex items-center gap-4">
           <span class="text-xl font-headline font-extrabold text-primary">2022</span>

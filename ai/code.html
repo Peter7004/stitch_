@@ -5,6 +5,11 @@
   <base href="../">
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title>ElecMaster | AI 센터</title>
+  <script>
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
+    localStorage.removeItem('THEME_PREFERENCE');
+  </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -86,33 +91,186 @@
     .custom-scrollbar::-webkit-scrollbar { width: 4px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #e0e3e5; border-radius: 10px; }
+    html.dark body {
+      background: radial-gradient(circle at top left, #0f172a, #111827 46%, #0b1220 100%);
+      color: #e5edf7;
+    }
+    html.dark header {
+      background: rgba(15, 23, 42, 0.84);
+      border-color: rgba(148, 163, 184, 0.16);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+    }
+    html.dark aside {
+      background: rgba(15, 23, 42, 0.88);
+      color: #e5edf7;
+    }
+    html.dark main {
+      background: transparent;
+    }
+    html.dark textarea {
+      background: transparent;
+      color: #f8fafc;
+    }
+    html.dark textarea::placeholder {
+      color: #94a3b8;
+    }
+    html.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.28);
+    }
+    html.dark .bg-surface-container,
+    html.dark .bg-surface-container-low,
+    html.dark .bg-surface-container-high,
+    html.dark .bg-surface-container-highest,
+    html.dark .bg-surface-container-lowest {
+      background: rgba(30, 41, 59, 0.72) !important;
+      color: #e5edf7 !important;
+      border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+    html.dark .text-on-surface,
+    html.dark .text-slate-900,
+    html.dark .text-slate-800,
+    html.dark .text-slate-700,
+    html.dark .text-primary {
+      color: #dbeafe !important;
+    }
+    html.dark .text-on-surface-variant,
+    html.dark .text-slate-600,
+    html.dark .text-slate-500,
+    html.dark .text-slate-400,
+    html.dark .text-outline {
+      color: #94a3b8 !important;
+    }
+    html.dark .border-outline-variant\/10,
+    html.dark .border-outline-variant\/20,
+    html.dark .border-slate-200,
+    html.dark .border-slate-700\/60,
+    html.dark .bg-slate-200\/50 {
+      border-color: rgba(148, 163, 184, 0.18) !important;
+      background-color: rgba(148, 163, 184, 0.18) !important;
+    }
+    html.dark #chat-limit-status,
+    html.dark .text-on-surface-variant\/60 {
+      color: #94a3b8 !important;
+    }
+    html.dark .dark-surface-card {
+      background: rgba(15, 23, 42, 0.88) !important;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+    }
+    html.dark .dark-surface-soft {
+      background: rgba(30, 41, 59, 0.72) !important;
+      border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+    html.dark .dark-text-main {
+      color: #e5edf7 !important;
+    }
+    html.dark .dark-text-sub {
+      color: #94a3b8 !important;
+    }
+    html.dark .dark-accent-card-blue {
+      background: linear-gradient(180deg, rgba(30, 64, 175, 0.28), rgba(15, 23, 42, 0.92)) !important;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+    html.dark .dark-accent-card-purple {
+      background: linear-gradient(180deg, rgba(126, 34, 206, 0.24), rgba(15, 23, 42, 0.92)) !important;
+      border: 1px solid rgba(192, 132, 252, 0.2);
+    }
+    html.dark .dark-accent-card-green {
+      background: linear-gradient(180deg, rgba(5, 150, 105, 0.24), rgba(15, 23, 42, 0.92)) !important;
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+    html.dark .dark-accent-card-orange {
+      background: linear-gradient(180deg, rgba(194, 65, 12, 0.24), rgba(15, 23, 42, 0.92)) !important;
+      border: 1px solid rgba(251, 146, 60, 0.2);
+    }
+    html.dark .bg-surface,
+    html.dark .bg-surface-container-lowest,
+    html.dark .bg-slate-50 {
+      background: transparent;
+    }
+    html.dark [class*="bg-white"],
+    html.dark [class*="bg-cream"],
+    html.dark [class*="bg-slate-50"],
+    html.dark [class*="bg-slate-100"],
+    html.dark [class*="bg-slate-200"],
+    html.dark [class*="bg-surface-container"] {
+      background-color: rgba(15, 23, 42, 0.88) !important;
+      color: #e5edf7 !important;
+      border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+    html.dark [class*="text-slate-9"],
+    html.dark [class*="text-slate-8"],
+    html.dark [class*="text-slate-7"],
+    html.dark [class*="text-primary"],
+    html.dark [class*="text-on-surface"] {
+      color: #dbeafe !important;
+    }
+    html.dark [class*="text-slate-6"],
+    html.dark [class*="text-slate-5"],
+    html.dark [class*="text-slate-4"],
+    html.dark [class*="text-muted"],
+    html.dark [class*="text-outline"],
+    html.dark [class*="text-on-surface-variant"] {
+      color: #94a3b8 !important;
+    }
+    html.dark [class*="border-slate-"],
+    html.dark [class*="border-line"],
+    html.dark [class*="border-outline"] {
+      border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+    html.dark [class*="bg-primary"],
+    html.dark [class*="bg-secondary/10"] {
+      background-image: none !important;
+    }
+    html.dark .bg-primary,
+    html.dark [class~="bg-primary"] {
+      background: #1d4ed8 !important;
+      color: #f8fafc !important;
+    }
+    html.dark .dark-accent-card-blue {
+      background: linear-gradient(180deg, rgba(30, 64, 175, 0.34), rgba(15, 23, 42, 0.94)) !important;
+    }
+    html.dark .dark-accent-card-purple {
+      background: linear-gradient(180deg, rgba(126, 34, 206, 0.3), rgba(15, 23, 42, 0.94)) !important;
+    }
+    html.dark .dark-accent-card-green {
+      background: linear-gradient(180deg, rgba(5, 150, 105, 0.3), rgba(15, 23, 42, 0.94)) !important;
+    }
+    html.dark .dark-accent-card-orange {
+      background: linear-gradient(180deg, rgba(194, 65, 12, 0.3), rgba(15, 23, 42, 0.94)) !important;
+    }
+    html.dark input,
+    html.dark textarea,
+    html.dark button {
+      color: #e5edf7;
+    }
   </style>
 </head>
 <body class="bg-surface text-on-surface antialiased">
-  <header class="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-xl shadow-sm shadow-blue-900/5">
+  <header class="fixed top-0 z-50 w-full bg-white/80 backdrop-blur-xl shadow-sm shadow-blue-900/5 dark:border-b dark:border-slate-700/60">
     <div class="relative mx-auto flex max-w-[1440px] items-center justify-between px-8 py-4">
       <div class="flex items-center gap-8">
-        <span class="text-2xl font-black tracking-tighter text-primary">ElecMaster</span>
+        <span class="text-2xl font-black tracking-tighter text-primary dark:text-blue-100">ElecMaster</span>
         <nav class="hidden gap-6 md:flex">
-          <a class="font-medium text-slate-500 transition-colors duration-200 hover:text-primary" href="./main/index.html">메인</a>
-          <a class="font-medium text-slate-500 transition-colors duration-200 hover:text-primary" href="./study/code.html">학습하기</a>
-          <a class="font-medium text-slate-500 transition-colors duration-200 hover:text-primary" href="./quiz/code.html">기출문제</a>
-          <a class="border-b-2 border-primary pb-1 font-headline font-bold tracking-tight text-primary" href="#ai-tutor">AI 센터</a>
+          <a class="font-medium text-slate-500 transition-colors duration-200 hover:text-primary dark:text-slate-300 dark:hover:text-blue-100" href="./main/index.html">메인</a>
+          <a class="font-medium text-slate-500 transition-colors duration-200 hover:text-primary dark:text-slate-300 dark:hover:text-blue-100" href="./study/code.html">핵심요약</a>
+          <a class="font-medium text-slate-500 transition-colors duration-200 hover:text-primary dark:text-slate-300 dark:hover:text-blue-100" href="./quiz/code.html">기출문제</a>
+          <a class="border-b-2 border-primary pb-1 font-headline font-bold tracking-tight text-primary dark:border-blue-200 dark:text-blue-100" href="./ai/code.html">AI 센터</a>
         </nav>
       </div>
-      <div class="flex items-center gap-4">
-        <span class="material-symbols-outlined cursor-pointer text-on-surface-variant transition-colors hover:text-primary">notifications</span>
-        <span class="material-symbols-outlined cursor-pointer text-on-surface-variant transition-colors hover:text-primary">account_circle</span>
+      <div class="flex items-center gap-4 dark:text-slate-300">
+        <span class="material-symbols-outlined cursor-pointer text-on-surface-variant transition-colors hover:text-primary dark:hover:text-blue-100">notifications</span>
+        <span class="material-symbols-outlined cursor-pointer text-on-surface-variant transition-colors hover:text-primary dark:hover:text-blue-100">account_circle</span>
       </div>
-      <div class="absolute bottom-0 left-0 h-[1px] w-full bg-slate-200/50"></div>
+      <div class="absolute bottom-0 left-0 h-[1px] w-full bg-slate-200/50 dark:bg-slate-700/60"></div>
     </div>
   </header>
 
-  <aside class="fixed left-0 top-0 z-40 hidden h-screen w-64 border-r-0 bg-slate-50 md:block">
+  <aside class="fixed left-0 top-0 z-40 hidden h-screen w-64 border-r-0 bg-slate-50 md:block dark:border-r dark:border-slate-700/60 dark-surface-card">
     <div class="flex h-full flex-col gap-y-2 px-4 pb-8 pt-20">
       <div class="mb-4 px-4 py-6">
-        <h2 class="text-lg font-bold text-slate-900">ElecMaster</h2>
-        <p class="mt-1 text-xs uppercase tracking-widest text-slate-500">AI 학습 센터</p>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">ElecMaster</h2>
+        <p class="mt-1 text-xs uppercase tracking-widest text-slate-500 dark:text-slate-400">AI 학습 센터</p>
       </div>
 
       <nav class="flex-1 space-y-1">
@@ -125,56 +283,56 @@
       </nav>
 
       <div class="mt-8 space-y-4 border-t border-slate-200 pt-6">
-        <h3 class="px-2 text-xs font-bold uppercase tracking-widest text-slate-600">실시간 금융 정보</h3>
+        <h3 class="px-2 text-xs font-bold uppercase tracking-widest text-slate-600 dark:text-slate-300">실시간 금융 정보</h3>
 
-        <div class="rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 p-3">
+        <div class="rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 p-3 dark-accent-card-blue">
           <div class="mb-1 flex items-center justify-between">
-            <div class="text-[10px] font-semibold text-slate-600">USD/KRW</div>
+            <div class="text-[10px] font-semibold text-slate-600 dark-text-sub">USD/KRW</div>
             <svg class="h-6 w-12" id="usd-chart" style="display:none;" viewBox="0 0 50 24"></svg>
           </div>
-          <div class="text-xl font-bold text-blue-900" id="usd-rate">-</div>
-          <div class="mt-1 text-[10px] text-slate-500">달러 환율</div>
+          <div class="text-xl font-bold text-blue-900 dark:text-blue-100" id="usd-rate">-</div>
+          <div class="mt-1 text-[10px] text-slate-500 dark-text-sub">달러 환율</div>
         </div>
 
-        <div class="rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 p-3">
+        <div class="rounded-lg bg-gradient-to-br from-purple-50 to-purple-100 p-3 dark-accent-card-purple">
           <div class="mb-1 flex items-center justify-between">
-            <div class="text-[10px] font-semibold text-slate-600">QQQ</div>
+            <div class="text-[10px] font-semibold text-slate-600 dark-text-sub">QQQ</div>
             <svg class="h-6 w-12" id="nasdaq-chart" style="display:none;" viewBox="0 0 50 24"></svg>
           </div>
-          <div class="text-lg font-bold text-purple-900" id="nasdaq-rate">-</div>
-          <div class="mt-1 text-[10px] text-slate-500" id="nasdaq-change">-</div>
+          <div class="text-lg font-bold text-purple-900 dark:text-violet-100" id="nasdaq-rate">-</div>
+          <div class="mt-1 text-[10px] text-slate-500 dark-text-sub" id="nasdaq-change">-</div>
         </div>
 
-        <div class="rounded-lg bg-gradient-to-br from-green-50 to-green-100 p-3">
+        <div class="rounded-lg bg-gradient-to-br from-green-50 to-green-100 p-3 dark-accent-card-green">
           <div class="mb-1 flex items-center justify-between">
-            <div class="text-[10px] font-semibold text-slate-600">SPY</div>
+            <div class="text-[10px] font-semibold text-slate-600 dark-text-sub">SPY</div>
             <svg class="h-6 w-12" id="sp500-chart" style="display:none;" viewBox="0 0 50 24"></svg>
           </div>
-          <div class="text-lg font-bold text-green-900" id="sp500-rate">-</div>
-          <div class="mt-1 text-[10px] text-slate-500" id="sp500-change">-</div>
+          <div class="text-lg font-bold text-green-900 dark:text-emerald-100" id="sp500-rate">-</div>
+          <div class="mt-1 text-[10px] text-slate-500 dark-text-sub" id="sp500-change">-</div>
         </div>
 
-        <div class="rounded-lg bg-gradient-to-br from-orange-50 to-orange-100 p-3">
+        <div class="rounded-lg bg-gradient-to-br from-orange-50 to-orange-100 p-3 dark-accent-card-orange">
           <div class="mb-1 flex items-center justify-between">
-            <div class="text-[10px] font-semibold text-slate-600">DIA</div>
+            <div class="text-[10px] font-semibold text-slate-600 dark-text-sub">DIA</div>
             <svg class="h-6 w-12" id="dow-chart" style="display:none;" viewBox="0 0 50 24"></svg>
           </div>
-          <div class="text-lg font-bold text-orange-900" id="dow-rate">-</div>
-          <div class="mt-1 text-[10px] text-slate-500" id="dow-change">-</div>
+          <div class="text-lg font-bold text-orange-900 dark:text-orange-100" id="dow-rate">-</div>
+          <div class="mt-1 text-[10px] text-slate-500 dark-text-sub" id="dow-change">-</div>
         </div>
 
-        <div class="mt-3 text-center text-[9px] text-slate-400">5분마다 자동 갱신</div>
+        <div class="mt-3 text-center text-[9px] text-slate-400 dark-text-sub">5분마다 자동 갱신</div>
       </div>
 
       <div class="mt-auto space-y-1 pt-6">
-        <a class="flex items-center gap-3 px-4 py-2 text-slate-600 transition-all hover:bg-slate-200/50" href="#">
+        <a class="flex items-center gap-3 px-4 py-2 text-slate-600 transition-all hover:bg-slate-200/50 dark:text-slate-300 dark:hover:bg-slate-800" href="./settings/code.html">
           <span class="material-symbols-outlined">settings</span>
           <span class="text-sm">설정</span>
         </a>
-        <a class="flex items-center gap-3 px-4 py-2 text-slate-600 transition-all hover:bg-slate-200/50" href="#">
+        <button type="button" id="support-btn" class="flex w-full items-center gap-3 px-4 py-2 text-left text-slate-600 transition-all hover:bg-slate-200/50 dark:text-slate-300 dark:hover:bg-slate-800">
           <span class="material-symbols-outlined">help</span>
           <span class="text-sm">고객지원</span>
-        </a>
+        </button>
       </div>
     </div>
   </aside>
@@ -183,18 +341,18 @@
     <div class="flex h-[calc(100vh-96px)] w-full flex-col">
       <div class="custom-scrollbar flex-1 space-y-6 overflow-y-auto px-8 py-8" id="chat-messages">
         <div class="py-12 text-center">
-          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-secondary/10">
+          <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-blue-900/40 dark:to-teal-900/40">
             <span class="material-symbols-outlined text-4xl text-primary">psychology</span>
           </div>
-          <h2 class="mb-2 text-2xl font-bold text-on-surface">AI 튜터와 함께 전기기능사를 공부해 보세요</h2>
-          <p class="text-sm text-on-surface-variant">회로, 공식, 개념, 풀이 과정 등 전기기능사 공부와 관련된 질문을 자유롭게 입력할 수 있습니다.</p>
+          <h2 class="mb-2 text-2xl font-bold text-on-surface dark:text-slate-100">AI 튜터와 함께 전기기능사를 공부해 보세요</h2>
+          <p class="text-sm text-on-surface-variant dark:text-slate-400">회로, 공식, 개념, 풀이 과정 등 전기기능사 공부와 관련된 질문을 자유롭게 입력할 수 있습니다.</p>
         </div>
       </div>
 
-      <div class="border-t border-outline-variant/10 bg-surface p-6">
+      <div class="border-t border-outline-variant/10 bg-surface p-6 dark:border-slate-700/60 dark:bg-transparent">
         <div class="mx-auto max-w-[1200px]">
           <div class="flex items-end gap-3">
-            <div class="flex-1 rounded-xl border border-outline-variant/20 bg-surface-container-lowest p-4 shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary/20">
+            <div class="dark-surface-soft flex-1 rounded-xl border border-outline-variant/20 bg-surface-container-lowest p-4 shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary/20 dark:border-slate-700 dark:bg-slate-800">
               <textarea
                 class="custom-scrollbar min-h-[44px] max-h-32 w-full resize-none border-none bg-transparent px-0 py-2 text-sm focus:ring-0"
                 id="chat-input"
@@ -208,8 +366,8 @@
               <span class="material-symbols-outlined text-sm">send</span>
             </button>
           </div>
-          <p class="mt-3 text-sm text-on-surface-variant" id="chat-limit-status">질문 5회까지 바로 사용할 수 있습니다.</p>
-          <p class="mt-4 text-center text-[11px] text-on-surface-variant/60">OpenRouter API를 통해 구동되는 ElecMaster AI 튜터</p>
+          <p class="mt-3 text-sm text-on-surface-variant dark-text-sub" id="chat-limit-status">질문 5회까지 바로 사용할 수 있습니다.</p>
+          <p class="mt-4 text-center text-[11px] text-on-surface-variant/60 dark-text-sub">OpenRouter API를 통해 구동되는 ElecMaster AI 튜터</p>
         </div>
       </div>
     </div>
@@ -250,6 +408,8 @@
     const chatLimitStatus = document.getElementById('chat-limit-status');
 
     const CHAT_LIMIT_KEY = 'ai_chat_usage_limit';
+    const CHAT_HISTORY_KEY = 'ai_chat_history';
+    const CHAT_DRAFT_KEY = 'ai_chat_draft';
     const CHAT_LIMIT_COUNT = 5;
     const CHAT_LIMIT_COOLDOWN_MS = 10 * 60 * 1000;
     let cooldownTimerId = null;
@@ -323,7 +483,52 @@
 
     let conversationHistory = [];
 
+    function clearChatWelcome() {
+      const welcome = chatMessages.querySelector('.py-12.text-center');
+      if (welcome) {
+        welcome.remove();
+      }
+    }
+
+    function saveConversationHistory() {
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(conversationHistory));
+    }
+
+    function loadConversationHistory() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(CHAT_HISTORY_KEY) || '[]');
+        if (!Array.isArray(saved)) return;
+
+        conversationHistory = saved.filter((item) =>
+          item &&
+          (item.role === 'user' || item.role === 'assistant') &&
+          typeof item.content === 'string' &&
+          item.content.trim()
+        );
+
+        if (conversationHistory.length > 0) {
+          clearChatWelcome();
+          conversationHistory.forEach((item) => {
+            addMessage(item.content, item.role === 'user');
+          });
+        }
+      } catch (error) {
+        console.warn('대화 기록을 불러오지 못했습니다.', error);
+        conversationHistory = [];
+      }
+    }
+
+    function loadDraftMessage() {
+      const draft = localStorage.getItem(CHAT_DRAFT_KEY);
+      if (!draft) return;
+
+      chatInput.value = draft;
+      localStorage.removeItem(CHAT_DRAFT_KEY);
+    }
+
     function addMessage(text, isUser = false) {
+      clearChatWelcome();
+
       const messageDiv = document.createElement('div');
       messageDiv.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'} gap-2`;
 
@@ -365,6 +570,7 @@
 
       addMessage(message, true);
       conversationHistory.push({ role: 'user', content: message });
+      saveConversationHistory();
       consumeQuestionUse();
       chatInput.value = '';
       sendBtn.disabled = true;
@@ -411,6 +617,7 @@
         const aiResponse = data.choices[0].message.content;
         addMessage(aiResponse, false);
         conversationHistory.push({ role: 'assistant', content: aiResponse });
+        saveConversationHistory();
       } catch (error) {
         removeLoading();
         addMessage(`네트워크 오류가 발생했습니다.\n${error.message}`, false);
@@ -430,6 +637,8 @@
       }
     });
 
+    loadConversationHistory();
+    loadDraftMessage();
     updateChatLimitUI();
 
     const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
@@ -513,7 +722,7 @@
       if (!FINNHUB_API_KEY) {
         indices.forEach((item) => {
           document.getElementById(item.id).textContent = '-';
-          document.getElementById(item.changeId).textContent = 'API 키 없음';
+          document.getElementById(item.changeId).textContent = '설정에서 키 입력';
         });
         return;
       }
@@ -553,6 +762,13 @@
 
     refreshFinancialData();
     setInterval(refreshFinancialData, 5 * 60 * 1000);
+
+    const supportBtn = document.getElementById('support-btn');
+    if (supportBtn) {
+      supportBtn.addEventListener('click', () => {
+        window.alert('고객지원 페이지는 현재 준비 중입니다.');
+      });
+    }
   </script>
 </body>
 </html>
