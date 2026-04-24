@@ -316,15 +316,10 @@ const voiceStatusText = document.getElementById('voiceStatusText');
 const audioModelDir = new URL('./quizui/tm-my-audio-model/', document.baseURI).href;
 const audioModelURL = `${audioModelDir}model.json`;
 const audioMetadataURL = `${audioModelDir}metadata.json`;
-const voiceThreshold = 0.8;
-const voiceHoldMs = 900;
-const voiceCooldownMs = 1400;
+const voiceThreshold = 0.6;
 
 let recognizer = null;
 let isVoiceRunning = false;
-let lastVoiceLabel = '배경 소음';
-let lastVoiceStableAt = 0;
-let lastVoiceApplyAt = 0;
 let cachedVoiceLabels = null;
 
 function openSubmitModal() {
@@ -410,7 +405,6 @@ function stopVoiceRecognition() {
   isVoiceRunning = false;
   voiceStartBtn.disabled = false;
   voiceStopBtn.disabled = true;
-  resetVoiceDetectionDisplay();
   updateVoiceStatus('음성 인식이 중지되었습니다. 다시 시작하면 현재 문제에 대해 1~4번을 말해 선택할 수 있습니다.');
 }
 
@@ -420,9 +414,7 @@ async function startVoiceRecognition() {
     updateVoiceStatus('음성 모델을 불러오고 있습니다...');
     const model = await ensureAudioRecognizer();
     const labels = await getVoiceLabels(model);
-    lastVoiceLabel = labels.includes('배경 소음') ? '배경 소음' : '';
-    lastVoiceStableAt = 0;
-    lastVoiceApplyAt = 0;
+    resetVoiceDetectionDisplay();
 
     model.listen((result) => {
       if (!isVoiceRunning) return;
@@ -441,17 +433,11 @@ async function startVoiceRecognition() {
       voiceDetectedLabel.textContent = label === '배경 소음' ? '배경 소음' : `${label}번`;
       voiceDetectedScore.textContent = confidenceText;
 
-      const now = Date.now();
-      if (label !== lastVoiceLabel) {
-        lastVoiceLabel = label;
-        lastVoiceStableAt = now;
-      }
-
       if (label === '배경 소음' || confidence < voiceThreshold) {
         if (label === '배경 소음') {
           updateVoiceStatus('배경 소음 또는 대기 상태입니다. 1번부터 4번 중 하나를 또렷하게 말해 주세요.');
         } else {
-          updateVoiceStatus(`"${label}" 인식 중이지만 신뢰도가 ${confidenceText}로 낮습니다. 조금 더 또렷하게 말해 주세요.`);
+          updateVoiceStatus(`"${label}" 인식 중이지만 신뢰도가 ${confidenceText}로 낮습니다. 60% 이상이 되면 바로 선택됩니다.`);
         }
         return;
       }
@@ -460,20 +446,9 @@ async function startVoiceRecognition() {
         updateVoiceStatus(`현재 모델 클래스 "${label}"은 보기 선택에 사용되지 않습니다.`);
         return;
       }
-
-      if (now - lastVoiceApplyAt < voiceCooldownMs) {
-        updateVoiceStatus(`최근에 ${voiceAppliedAnswer.textContent}이 적용되었습니다. 잠시 후 다시 말해 주세요.`);
-        return;
-      }
-
-      if (now - lastVoiceStableAt < voiceHoldMs) {
-        updateVoiceStatus(`${label}번을 안정적으로 인식하는 중입니다. 잠시만 유지하면 자동 선택됩니다.`);
-        return;
-      }
-
-      lastVoiceApplyAt = now;
-      updateVoiceStatus(`${label}번을 음성으로 선택했습니다. 다음 답을 말하거나 버튼으로 계속 진행할 수 있습니다.`);
       setAnswerForCurrent(Number(label) - 1, '음성');
+      updateVoiceStatus(`${label}번을 음성으로 선택했습니다. 마이크를 자동으로 중지합니다.`);
+      stopVoiceRecognition();
     }, {
       includeSpectrogram: false,
       probabilityThreshold: 0,
