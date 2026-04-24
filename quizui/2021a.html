@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>전기기능사 | 2021년 1회 필기</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Pretendard:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -145,6 +147,43 @@
         <span class="material-symbols-outlined text-sm">task_alt</span>
       </button>
     </div>
+
+    <section class="mt-6 rounded-[28px] border border-line bg-white p-6 shadow-soft">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.25em] text-secondary">Voice TM</p>
+          <h3 class="mt-2 text-2xl font-headline font-extrabold text-primary">목소리로 1~4번 선택</h3>
+          <p class="mt-2 text-sm leading-7 text-muted">`1번`, `2번`, `3번`, `4번`처럼 말하면 티처블머신 오디오 모델이 보기를 선택합니다. 인식이 잠시 안정적으로 유지될 때만 반영됩니다.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button id="voiceStartBtn" class="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90" type="button">
+            <span class="material-symbols-outlined text-sm">mic</span>
+            음성 인식 시작
+          </button>
+          <button id="voiceStopBtn" class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-cream disabled:cursor-not-allowed disabled:opacity-50" type="button" disabled>
+            <span class="material-symbols-outlined text-sm">mic_off</span>
+            음성 인식 중지
+          </button>
+        </div>
+      </div>
+      <div class="mt-5 grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl bg-cream p-4">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-muted">현재 인식</p>
+          <p id="voiceDetectedLabel" class="mt-2 text-lg font-bold text-primary">대기 중</p>
+        </div>
+        <div class="rounded-2xl bg-cream p-4">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-muted">신뢰도</p>
+          <p id="voiceDetectedScore" class="mt-2 text-lg font-bold text-primary">0%</p>
+        </div>
+        <div class="rounded-2xl bg-cream p-4">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-muted">최근 적용</p>
+          <p id="voiceAppliedAnswer" class="mt-2 text-lg font-bold text-primary">없음</p>
+        </div>
+      </div>
+      <div class="mt-4 rounded-2xl border border-dashed border-line bg-slate-50 px-4 py-3 text-sm leading-7 text-muted">
+        <p id="voiceStatusText">음성 모델을 불러오기 전입니다. 시작 버튼을 누르면 마이크 권한을 요청합니다.</p>
+      </div>
+    </section>
   </main>
 
   <aside class="border-l border-line/80 bg-white/88 backdrop-blur px-6 py-8">
@@ -267,6 +306,26 @@ const submitModal = document.getElementById('submitModal');
 const submitModalText = document.getElementById('submitModalText');
 const continueSolveBtn = document.getElementById('continueSolveBtn');
 const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+const voiceStartBtn = document.getElementById('voiceStartBtn');
+const voiceStopBtn = document.getElementById('voiceStopBtn');
+const voiceDetectedLabel = document.getElementById('voiceDetectedLabel');
+const voiceDetectedScore = document.getElementById('voiceDetectedScore');
+const voiceAppliedAnswer = document.getElementById('voiceAppliedAnswer');
+const voiceStatusText = document.getElementById('voiceStatusText');
+
+const audioModelDir = new URL('./quizui/tm-my-audio-model/', document.baseURI).href;
+const audioModelURL = `${audioModelDir}model.json`;
+const audioMetadataURL = `${audioModelDir}metadata.json`;
+const voiceThreshold = 0.8;
+const voiceHoldMs = 900;
+const voiceCooldownMs = 1400;
+
+let recognizer = null;
+let isVoiceRunning = false;
+let lastVoiceLabel = '배경 소음';
+let lastVoiceStableAt = 0;
+let lastVoiceApplyAt = 0;
+let cachedVoiceLabels = null;
 
 function openSubmitModal() {
   const solved = Object.keys(answers).length;
@@ -285,6 +344,151 @@ function openSubmitModal() {
 function closeSubmitModal() {
   submitModal.classList.add('hidden');
   submitModal.classList.remove('flex');
+}
+
+function setAnswerForCurrent(choiceIndex, source = '클릭') {
+  const q = questions[current];
+  answers[q.n] = choiceIndex;
+  updateProgress();
+  renderQuestion();
+
+  if (source === '음성') {
+    voiceAppliedAnswer.textContent = `${q.n}번 문제 ${choiceIndex + 1}번`;
+  }
+}
+
+function updateVoiceStatus(message) {
+  voiceStatusText.textContent = message;
+}
+
+function resetVoiceDetectionDisplay() {
+  voiceDetectedLabel.textContent = '대기 중';
+  voiceDetectedScore.textContent = '0%';
+}
+
+async function ensureAudioRecognizer() {
+  if (recognizer) return recognizer;
+  recognizer = speechCommands.create(
+    'BROWSER_FFT',
+    undefined,
+    audioModelURL,
+    audioMetadataURL
+  );
+  await recognizer.ensureModelLoaded();
+  return recognizer;
+}
+
+async function getVoiceLabels(model) {
+  if (Array.isArray(cachedVoiceLabels) && cachedVoiceLabels.length > 0) {
+    return cachedVoiceLabels;
+  }
+
+  const modelLabels = typeof model.wordLabels === 'function' ? model.wordLabels() : null;
+  if (Array.isArray(modelLabels) && modelLabels.length > 0) {
+    cachedVoiceLabels = modelLabels;
+    return cachedVoiceLabels;
+  }
+
+  const response = await fetch(audioMetadataURL);
+  if (!response.ok) {
+    throw new Error(`metadata.json을 불러오지 못했습니다. (${response.status})`);
+  }
+
+  const metadata = await response.json();
+  if (!Array.isArray(metadata.wordLabels) || metadata.wordLabels.length === 0) {
+    throw new Error('metadata.json에 wordLabels 정보가 없습니다.');
+  }
+
+  cachedVoiceLabels = metadata.wordLabels;
+  return cachedVoiceLabels;
+}
+
+function stopVoiceRecognition() {
+  if (recognizer && isVoiceRunning) {
+    recognizer.stopListening();
+  }
+  isVoiceRunning = false;
+  voiceStartBtn.disabled = false;
+  voiceStopBtn.disabled = true;
+  resetVoiceDetectionDisplay();
+  updateVoiceStatus('음성 인식이 중지되었습니다. 다시 시작하면 현재 문제에 대해 1~4번을 말해 선택할 수 있습니다.');
+}
+
+async function startVoiceRecognition() {
+  try {
+    voiceStartBtn.disabled = true;
+    updateVoiceStatus('음성 모델을 불러오고 있습니다...');
+    const model = await ensureAudioRecognizer();
+    const labels = await getVoiceLabels(model);
+    lastVoiceLabel = labels.includes('배경 소음') ? '배경 소음' : '';
+    lastVoiceStableAt = 0;
+    lastVoiceApplyAt = 0;
+
+    model.listen((result) => {
+      if (!isVoiceRunning) return;
+
+      const scores = Array.from(result.scores);
+      let bestIndex = 0;
+      scores.forEach((score, index) => {
+        if (score > scores[bestIndex]) {
+          bestIndex = index;
+        }
+      });
+
+      const label = labels[bestIndex];
+      const confidence = scores[bestIndex];
+      const confidenceText = `${Math.round(confidence * 100)}%`;
+      voiceDetectedLabel.textContent = label === '배경 소음' ? '배경 소음' : `${label}번`;
+      voiceDetectedScore.textContent = confidenceText;
+
+      const now = Date.now();
+      if (label !== lastVoiceLabel) {
+        lastVoiceLabel = label;
+        lastVoiceStableAt = now;
+      }
+
+      if (label === '배경 소음' || confidence < voiceThreshold) {
+        if (label === '배경 소음') {
+          updateVoiceStatus('배경 소음 또는 대기 상태입니다. 1번부터 4번 중 하나를 또렷하게 말해 주세요.');
+        } else {
+          updateVoiceStatus(`"${label}" 인식 중이지만 신뢰도가 ${confidenceText}로 낮습니다. 조금 더 또렷하게 말해 주세요.`);
+        }
+        return;
+      }
+
+      if (!['1', '2', '3', '4'].includes(label)) {
+        updateVoiceStatus(`현재 모델 클래스 "${label}"은 보기 선택에 사용되지 않습니다.`);
+        return;
+      }
+
+      if (now - lastVoiceApplyAt < voiceCooldownMs) {
+        updateVoiceStatus(`최근에 ${voiceAppliedAnswer.textContent}이 적용되었습니다. 잠시 후 다시 말해 주세요.`);
+        return;
+      }
+
+      if (now - lastVoiceStableAt < voiceHoldMs) {
+        updateVoiceStatus(`${label}번을 안정적으로 인식하는 중입니다. 잠시만 유지하면 자동 선택됩니다.`);
+        return;
+      }
+
+      lastVoiceApplyAt = now;
+      updateVoiceStatus(`${label}번을 음성으로 선택했습니다. 다음 답을 말하거나 버튼으로 계속 진행할 수 있습니다.`);
+      setAnswerForCurrent(Number(label) - 1, '음성');
+    }, {
+      includeSpectrogram: false,
+      probabilityThreshold: 0,
+      overlapFactor: 0.5
+    });
+
+    isVoiceRunning = true;
+    voiceStopBtn.disabled = false;
+    updateVoiceStatus('음성 인식이 시작되었습니다. 마이크 가까이에서 1번, 2번, 3번, 4번 중 하나를 말해 보세요.');
+  } catch (error) {
+    isVoiceRunning = false;
+    voiceStartBtn.disabled = false;
+    voiceStopBtn.disabled = true;
+    updateVoiceStatus(`음성 인식을 시작하지 못했습니다. 마이크 권한과 모델 파일을 확인해 주세요. (${error.message})`);
+  }
 }
 
 function renderMap() {
@@ -336,9 +540,7 @@ function renderQuestion() {
       <div class="pt-1 text-base leading-7 text-ink">${option}</div>
     `;
     label.addEventListener('click', () => {
-      answers[q.n] = idx;
-      updateProgress();
-      renderQuestion();
+      setAnswerForCurrent(idx);
     });
     optionList.appendChild(label);
   });
@@ -379,6 +581,8 @@ confirmSubmitBtn.addEventListener('click', () => {
   localStorage.setItem('electricExam2021Round1SubmittedAt', new Date().toISOString());
   window.location.href = new URL('./result/r21a.html', document.baseURI).href;
 });
+voiceStartBtn.addEventListener('click', startVoiceRecognition);
+voiceStopBtn.addEventListener('click', stopVoiceRecognition);
 submitModal.addEventListener('click', (event) => {
   if (event.target === submitModal) {
     closeSubmitModal();
@@ -389,6 +593,7 @@ document.addEventListener('keydown', (event) => {
     closeSubmitModal();
   }
 });
+window.addEventListener('beforeunload', stopVoiceRecognition);
 
 updateProgress();
 renderQuestion();
