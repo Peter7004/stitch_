@@ -153,7 +153,7 @@
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.25em] text-secondary">Voice TM</p>
           <h3 class="mt-2 text-2xl font-headline font-extrabold text-primary">목소리로 1~4번 선택</h3>
-          <p class="mt-2 text-sm leading-7 text-muted">`1번`, `2번`, `3번`, `4번`처럼 말하면 티처블머신 오디오 모델이 보기를 선택합니다. 인식이 잠시 안정적으로 유지될 때만 반영됩니다.</p>
+          <p class="mt-2 text-sm leading-7 text-muted">`1번`, `2번`, `3번`, `4번`처럼 말하면 티처블머신 오디오 모델이 보기를 선택합니다. 배경 소음을 제외하고 60%를 넘으면 바로 반영되고 마이크가 자동으로 멈춥니다.</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <button id="voiceStartBtn" class="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90" type="button">
@@ -398,14 +398,17 @@ async function getVoiceLabels(model) {
   return cachedVoiceLabels;
 }
 
-function stopVoiceRecognition() {
-  if (recognizer && isVoiceRunning) {
+function stopVoiceRecognition(statusMessage = '음성 인식이 중지되었습니다. 다시 시작하면 현재 문제에 대해 1~4번을 말해 선택할 수 있습니다.') {
+  const wasRunning = isVoiceRunning;
+  isVoiceRunning = false;
+  if (recognizer && wasRunning) {
     recognizer.stopListening();
   }
-  isVoiceRunning = false;
   voiceStartBtn.disabled = false;
   voiceStopBtn.disabled = true;
-  updateVoiceStatus('음성 인식이 중지되었습니다. 다시 시작하면 현재 문제에 대해 1~4번을 말해 선택할 수 있습니다.');
+  if (statusMessage !== null) {
+    updateVoiceStatus(statusMessage);
+  }
 }
 
 async function startVoiceRecognition() {
@@ -446,9 +449,10 @@ async function startVoiceRecognition() {
         updateVoiceStatus(`현재 모델 클래스 "${label}"은 보기 선택에 사용되지 않습니다.`);
         return;
       }
+      stopVoiceRecognition(null);
       setAnswerForCurrent(Number(label) - 1, '음성');
-      updateVoiceStatus(`${label}번을 음성으로 선택했습니다. 마이크를 자동으로 중지합니다.`);
-      stopVoiceRecognition();
+      voiceDetectedLabel.textContent = `${label}번 확정`;
+      updateVoiceStatus(`${label}번을 음성으로 선택했고 마이크를 자동으로 중지했습니다.`);
     }, {
       includeSpectrogram: false,
       probabilityThreshold: 0,
