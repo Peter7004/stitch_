@@ -153,7 +153,7 @@
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.25em] text-secondary">Voice TM</p>
           <h3 class="mt-2 text-2xl font-headline font-extrabold text-primary">목소리로 1~4번 선택</h3>
-          <p class="mt-2 text-sm leading-7 text-muted">`1번`, `2번`, `3번`, `4번`처럼 말하면 티처블머신 오디오 모델이 보기를 선택합니다. 배경 소음을 제외하고 60%를 넘으면 바로 반영되고 마이크가 자동으로 멈춥니다.</p>
+          <p class="mt-2 text-sm leading-7 text-muted">`1번`, `2번`, `3번`, `4번`처럼 말하면 티처블머신 오디오 모델이 보기를 선택합니다. 배경 소음을 제외하고 70%를 넘으면 바로 반영되고 마이크가 자동으로 멈춥니다.</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <button id="voiceStartBtn" class="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90" type="button">
@@ -316,7 +316,7 @@ const voiceStatusText = document.getElementById('voiceStatusText');
 const audioModelDir = new URL('./quizui/tm-my-audio-model/', document.baseURI).href;
 const audioModelURL = `${audioModelDir}model.json`;
 const audioMetadataURL = `${audioModelDir}metadata.json`;
-const voiceThreshold = 0.6;
+const voiceThreshold = 0.7;
 
 let recognizer = null;
 let isVoiceRunning = false;
@@ -440,7 +440,7 @@ async function startVoiceRecognition() {
         if (label === '배경 소음') {
           updateVoiceStatus('배경 소음 또는 대기 상태입니다. 1번부터 4번 중 하나를 또렷하게 말해 주세요.');
         } else {
-          updateVoiceStatus(`"${label}" 인식 중이지만 신뢰도가 ${confidenceText}로 낮습니다. 60% 이상이 되면 바로 선택됩니다.`);
+          updateVoiceStatus(`"${label}" 인식 중이지만 신뢰도가 ${confidenceText}로 낮습니다. 70% 이상이 되면 바로 선택됩니다.`);
         }
         return;
       }
