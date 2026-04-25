@@ -318,8 +318,15 @@ function renderQuestion() {
   courseBadge.textContent = q.s;
   questionNumber.textContent = `문제 ${String(q.n).padStart(2, '0')}`;
   questionText.textContent = q.t;
+  const figureParts = [];
   if (q.f) {
-    questionFigure.innerHTML = q.f;
+    figureParts.push(q.f);
+  }
+  if (q.img) {
+    figureParts.push(`<img src="${q.img}" alt="${q.n}번 문제 이미지" class="w-full h-auto rounded-[18px] bg-white object-contain" />`);
+  }
+  if (figureParts.length > 0) {
+    questionFigure.innerHTML = figureParts.join('');
     questionFigure.classList.remove('hidden');
   } else {
     questionFigure.innerHTML = '';

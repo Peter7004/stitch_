@@ -320,12 +320,19 @@ function renderQuestion() {
   questionText.textContent = q.t;
   currentIndexText.textContent = String(current + 1);
 
+  const figureParts = [];
   if (q.f) {
+    figureParts.push(q.f);
+  }
+  if (q.img) {
+    figureParts.push(`<img src="${q.img}" alt="${q.n}번 문제 이미지" class="w-full h-auto rounded-[18px] bg-white object-contain" />`);
+  }
+  if (figureParts.length > 0) {
+    questionFigure.innerHTML = figureParts.join('');
     questionFigure.classList.remove('hidden');
-    questionFigure.innerHTML = q.f;
   } else {
-    questionFigure.classList.add('hidden');
     questionFigure.innerHTML = '';
+    questionFigure.classList.add('hidden');
   }
 
   optionList.innerHTML = '';
