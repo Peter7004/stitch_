@@ -395,9 +395,9 @@
       return key || '';
     }
 
-    const API_KEY = getOrPromptAPIKey('OPENROUTER', 'OpenRouter API 키');
-    const FINNHUB_API_KEY = getOrPromptAPIKey('FINNHUB', 'Finnhub API 키', true);
-    const EXCHANGE_RATE_API_KEY = getOrPromptAPIKey('EXCHANGERATE', 'ExchangeRate API 키', true);
+    const API_KEY = (getOrPromptAPIKey('OPENROUTER', 'OpenRouter API 키') || '').trim();
+    const FINNHUB_API_KEY = (getOrPromptAPIKey('FINNHUB', 'Finnhub API 키', true) || '').trim();
+    const EXCHANGE_RATE_API_KEY = (getOrPromptAPIKey('EXCHANGERATE', 'ExchangeRate API 키', true) || '').trim();
 
     const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
     const MODEL = 'openai/gpt-4o-mini';
@@ -670,6 +670,19 @@
       return trimmed;
     }
 
+    function setFinanceError(rateId, changeId, message, detail = '') {
+      const rateEl = document.getElementById(rateId);
+      const changeEl = document.getElementById(changeId);
+      if (rateEl) {
+        rateEl.textContent = '-';
+        rateEl.title = detail || message;
+      }
+      if (changeEl) {
+        changeEl.textContent = message;
+        changeEl.title = detail || message;
+      }
+    }
+
     async function fetchExchangeRate() {
       const apis = [
         async () => {
@@ -730,9 +743,17 @@
       for (const item of indices) {
         try {
           const response = await fetch(`${FINNHUB_BASE_URL}/quote?symbol=${item.symbol}&token=${FINNHUB_API_KEY}`);
-          const data = await response.json();
+          const data = await response.json().catch(() => ({}));
 
-          if (data.c === undefined || data.c === null) {
+          if (!response.ok) {
+            throw new Error(data.error || `HTTP ${response.status}`);
+          }
+
+          if (data.error) {
+            throw new Error(data.error);
+          }
+
+          if (data.c === undefined || data.c === null || Number.isNaN(Number(data.c))) {
             throw new Error('시세 데이터 없음');
           }
 
@@ -747,8 +768,13 @@
           updateMiniChart(item.chartId, history, item.color);
         } catch (error) {
           console.warn(`${item.symbol} 시세 호출 실패:`, error);
-          document.getElementById(item.id).textContent = '-';
-          document.getElementById(item.changeId).textContent = '조회 실패';
+          const detail = String(error?.message || error || '알 수 없는 오류');
+          const shortMessage =
+            /api key/i.test(detail) ? '키 오류' :
+            /limit|quota|429/i.test(detail) ? '호출 제한' :
+            /fetch|network|failed/i.test(detail) ? '연결 실패' :
+            '조회 실패';
+          setFinanceError(item.id, item.changeId, shortMessage, detail);
         }
       }
     }
